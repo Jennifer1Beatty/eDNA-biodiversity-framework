@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eDNA Interactive Framework</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { margin: 0; padding: 20px; background-color: #f4f7f6; color: #333; }
+        
+        h1.title { text-align: center; color: #1e3d59; border: 2px solid #b5d5e5; padding: 15px; background: #f5fafd; margin-bottom: 30px; }
+        
+        /* Interactive Flowchart Container */
+        .flowchart-container { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 40px; overflow-x: auto; }
+        
+        /* Column Categories */
+        .flow-column { display: flex; flex-direction: column; gap: 15px; background: #fff; padding: 15px 10px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-top: 5px solid #174276; }
+        .column-header { background: #174276; color: white; text-align: center; padding: 10px 5px; font-weight: bold; font-size: 14px; border-radius: 4px; min-height: 45px; display: flex; align-items: center; justify-content: center; margin-bottom: 5px; }
+        
+        /* Clickable Flowchart Step Buttons */
+        .step-btn { display: block; width: 100%; padding: 12px 8px; border: none; border-radius: 20px; text-align: center; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; text-decoration: none; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative; z-index: 2; }
+        
+        /* Color coding matching your image styling */
+        .btn-blue { background: #1d3557; color: white; }
+        .btn-cyan { background: #00f5d4; color: #014f45; }
+        .btn-diamond { background: #00bbf9; color: white; border-radius: 4px; } 
+
+        .step-btn:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); opacity: 0.9; }
+
+        /* SVG Arrow container styles */
+        .arrow-box { display: flex; justify-content: center; align-items: center; height: 25px; margin: -5px 0; }
+        .arrow-svg { width: 24px; height: 24px; fill: #174276; }
+
+        /* Information Display Sections */
+        .info-section { background: white; padding: 30px; margin-top: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: none; border-left: 6px solid #00bbf9; }
+        .info-section.active { display: block; animation: fadeIn 0.3s ease-in; }
+        .info-section h2 { color: #174276; margin-top: 0; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <h1 class="title">eDNA for biodiversity flowchart</h1>
+
+    <!-- Interactive Flowchart Grid -->
+    <div class="flowchart-container">
+        
+        <!-- Suggested Method Column with Custom Arrows -->
+        <div class="flow-column">
+            <div class="column-header">Suggested Method</div>
+            
+            <button class="step-btn btn-blue" onclick="showContent('target-taxa')">Target taxa</button>
+            
+            <!-- Down Arrow from Target Taxa to Method Suggestion -->
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
+                </svg>
+            </div>
+            
+            <button class="step-btn btn-cyan" onclick="showContent('method-suggestion')">Method suggestion</button>
+            
+            <!-- Up Arrow from Policy Initiative to Method Suggestion -->
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/>
+                </svg>
+            </div>
+            
+            <button class="step-btn btn-blue" onclick="showContent('policy-initiative')">Policy initiative</button>
+        </div>
+
+        <!-- Sampling Scheme -->
+        <div class="flow-column">
+            <div class="column-header">Sampling Scheme</div>
+            <button class="step-btn btn-cyan" onclick="showContent('metabarcoding')">Metabarcoding</button>
+            <div style="height: 15px;"></div> <!-- Spacing placeholder instead of arrows -->
+            <button class="step-btn btn-cyan" onclick="showContent('ddpcr-qpcr')">ddPCR / qPCR</button>
+            <div style="height: 15px;"></div>
+            <button class="step-btn btn-cyan" onclick="showContent('metagenomics')">Metagenomics</button>
+        </div>
+
+        <!-- Lab Processing -->
+        <div class="flow-column">
+            <div class="column-header">Lab processing</div>
+            <button class="step-btn btn-cyan" onclick="showContent('pcr-primers')">PCR primers</button>
+            <div style="height: 15px;"></div>
+            <button class="step-btn btn-cyan" onclick="showContent('sequencing-platforms')">Sequencing platforms</button>
+            <div style="height: 15px;"></div>
+            <button class="step-btn btn-cyan" onclick="showContent('dna-extraction')">DNA extraction</button>
+            <div style="height: 15px;"></div>
+            <button class="step-btn btn-cyan" onclick="showContent('library-prep')">Library preparation</button>
+        </div>
+
+        <!-- Data Analysis -->
+        <div class="flow-column">
+            <div class="column-header">Data analysis</div>
+            <button class="step-btn btn-cyan" onclick="showContent('reference-databases')">Reference databases</button>
+            <div style="height: 15px;"></div>
+            <button class="step-btn btn-cyan" onclick="showContent('bioinformatics-pipeline')">Bioinformatics pipeline</button>
+        </div>
+
+        <!-- Biodiversity Indicator -->
+        <div class="flow-column">
+            <div class="column-header">Biodiversity indicator</div>
+            <button class="step-btn btn-cyan" onclick="showContent('biodiversity-metrics')">Biodiversity metrics</button>
+            <div style="height: 15px;"></div>
+            <button class="step-btn btn-cyan" onclick="showContent('evs')">EVs</button>
+        </div>
+
+        <!-- Final Product -->
+        <div class="flow-column">
+            <div class="column-header">Final product</div>
+            <button class="step-btn btn-diamond" onclick="showContent('metric-submit')">Metric to submit to database</button>
+        </div>
+
+    </div>
+
+    <!-- Dynamic Content Area -->
+    <div id="instruction-placeholder" style="text-align: center; color: #777; padding: 40px; background: #eef2f5; border-radius: 6px; border: 2px dashed #ccc;">
+        <h3>💡 Click any box in the flowchart above to view details and standard operating procedures.</h3>
+    </div>
+
+    <!-- Content Sections (Keep exactly the same as previous step) -->
+    <div id="target-taxa" class="info-section">
+        <h2>Target Taxa</h2>
+        <p>Define the target taxonomic group (e.g., fish, amphibians, macroinvertebrates). Current standard frameworks prioritize optimizing primer sets specifically matching local regional reference registers.</p>
+    </div>
+
+    <div id="method-suggestion" class="info-section">
+        <h2>Method Suggestion</h2>
+        <p>Based on the target taxa, choose between targeted species detection or broad-scale community profiling.</p>
+    </div>
+
+    <div id="policy-initiative" class="info-section">
+        <h2>Policy Initiative</h2>
+        <p>Align the biological survey requirements with regulatory frameworks, local management directives, or environmental protection goals.</p>
+    </div>
+
+    <div id="metabarcoding" class="info-section">
+        <h2>Metabarcoding</h2>
+        <p>Utilized for broad biodiversity assessments across multiple trophic levels simultaneously using high-throughput sequencing panels.</p>
+    </div>
+
+    <div id="ddpcr-qpcr" class="info-section">
+        <h2>ddPCR / qPCR</h2>
+        <p>Best for targeted species monitoring (e.g., invasive pests or highly endangered target species) where quantitative sensitivity is paramount.</p>
+    </div>
+
+    <div id="metagenomics" class="info-section">
+        <h2>Metagenomics</h2>
+        <p>Shotgun sequencing applications used to capture whole environmental genomes without targeted PCR bias.</p>
+    </div>
+
+    <div id="pcr-primers" class="info-section">
+        <h2>PCR Primers</h2>
+        <p>Details regarding primer selection validation, in-silico testing profiles, and minimizing amplification bias.</p>
+    </div>
+
+    <div id="sequencing-platforms" class="info-section">
+        <h2>Sequencing Platforms</h2>
+        <p>Operational instructions for benchmarking standard Illumina platforms vs. long-read options like Oxford Nanopore based on the survey scope.</p>
+    </div>
+
+    <div id="dna-extraction" class="info-section">
+        <h2>DNA Extraction</h2>
+        <p>Standardized extraction protocols using commercial kits, custom magnetic bead cleanups, and clean-lab configurations to isolate quality yields.</p>
+    </div>
+
+    <div id="library-prep" class="info-section">
+        <h2>Library Preparation</h2>
+        <p>SOPs for index ligation, cleanups, absolute quantification, and pooling controls to prevent cross-contamination.</p>
+    </div>
+
+    <div id="reference-databases" class="info-section">
+        <h2>Reference Databases</h2>
+        <p>Direct taxonomic link outs to NCBI, BOLD, or specialized regional reference indices used for sequence assignment validation.</p>
+    </div>
+
+    <div id="bioinformatics-pipeline" class="info-section">
+        <h2>Bioinformatics Pipeline</h2>
+        <p>Standard data processing flows including quality filtering, denoising (ASVs vs. OTUs), chimera checks, and taxonomy assignment.</p>
+    </div>
+
+    <div id="biodiversity-metrics" class="info-section">
+        <h2>Biodiversity Metrics</h2>
+        <p>Methods for computing Alpha diversity indices, Beta community variations, and multi-metric indices based on sequence data counts.</p>
+    </div>
+
+    <div id="evs" class="info-section">
+        <h2>EVs (Essential Variables)</h2>
+        <p>Mapping eDNA outputs directly to national or global Essential Biodiversity Variables (EBVs) frameworks.</p>
+    </div>
+
+    <div id="metric-submit" class="info-section">
+        <h2>Metric to Submit to Database</h2>
+        <p>Final formats, metadata schemas, and submission keys required for uploading reporting parameters to central biodiversity open access portals.</p>
+    </div>
+
+    <!-- Navigation Script -->
+    <script>
+        function showContent(sectionId) {
+            document.getElementById('instruction-placeholder').style.display = 'none';
+            const sections = document.querySelectorAll('.info-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+            const activeSection = document.getElementById(sectionId);
+            activeSection.classList.add('active');
+            activeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    </script>
+</body>
+</html>
