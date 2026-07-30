@@ -55,10 +55,13 @@
         
         <!-- Suggested Method Column with Custom Arrows -->
         <div class="flow-column">
-            <div class="column-header">Suggested Method</div>
+            <div class="column-header">Starting Point</div>
             
-            <button class="step-btn btn-blue" onclick="showContent('target-taxa')">Target taxa</button>
-            
+            <button class="step-btn btn-blue" onclick="showContent('fish-abundance')">Dataset: Fish abundance</button>
+            <div style="height: 15px;"></div> 
+            <button class="step-btn btn-blue" onclick="showContent('plankton-tax')">Dataset: Plankton taxonomy</button>
+            <div style="height: 15px;"></div> 
+            <button class="step-btn btn-blue" onclick="showContent('invasive-fish')">Dataset: Invasive fish species</button>
             <!-- Down Arrow from Target Taxa to Method Suggestion -->
             <div class="arrow-box">
                 <svg class="arrow-svg" viewBox="0 0 24 24">
@@ -75,7 +78,11 @@
                 </svg>
             </div>
             
-            <button class="step-btn btn-blue" onclick="showContent('policy-initiative')">Policy initiative</button>
+            <button class="step-btn btn-blue" onclick="showContent('init-hab')">Initative: Monitoring harmful algal bloom</button>
+            <div style="height: 15px;"></div> 
+            <button class="step-btn btn-blue" onclick="showContent('init-nonindig')">Initative: Detecting non-indigenous species</button>
+            <div style="height: 15px;"></div>
+            <button class="step-btn btn-blue" onclick="showContent('init-fishabund')">Initative: Estimating fish and shellfish abundance</button>
         </div>
 
         <!-- Sampling Scheme -->
@@ -147,10 +154,27 @@
     </div>
 
     <!-- Content Sections (Keep exactly the same as previous step) -->
-    <div id="target-taxa" class="info-section">
-        <h2>Target Taxa</h2>
-        <p>Define the target taxonomic group (e.g., fish, amphibians, macroinvertebrates). Current standard frameworks prioritize optimizing primer sets specifically matching local regional reference registers.</p>
+    <div id="fish-abundance" class="info-section">
+        <div>
+            <h2>Fish abundance dataset</h2>
+            <p>Fish abundance data generated using qPCR or ddPCR analysis. </p>
+        </div>
     </div>
+
+    <div id="plankton-tax" class="info-section">
+        <div>
+            <h2>Plankton taxonomy dataset</h2>
+            <p>Plankton taxonomic information generated using metabarcoding.</p>
+        </div>
+    </div>div>
+
+    <div id="invasive-fish" class="info-section">
+        <div>
+            <h2>Invasive fish species dataset</h2>
+            <p>Fish taxonomic information generated using metabarcoding or fish abundance data generated using qPCR or ddPCR.</p>
+        </div>
+    </div>div>
+
 
     <div id="method-suggestion" class="info-section">
         <h2>Method Suggestion</h2>
@@ -158,9 +182,48 @@
          Sampling considerations that impact biodiversity assessment include: sampling depth, volume, daily timing.</p>
     </div>
 
-    <div id="policy-initiative" class="info-section">
-        <h2>Policy Initiative</h2>
-        <p>Align the biological survey requirements with regulatory frameworks, local management directives, or environmental protection goals.</p>
+    <div id="init-hab" class="info-section">
+        <div>
+            <h2>Monitoring harmful algal bloom</h2>
+            <p>MSFD descriptor 5: D5C3, D5C4, D5C6- Monitoring the impact of eutrophication on harmful algal species abundance</p>
+        </div>
+        <div>
+            <h3>Recommended methods:</h3>
+            <ul>
+                <li>Metabarcoding</li>
+                <li>qPCR/ddPCR</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="init-nonindig" class="info-section">
+        <div>
+            <h2>Detecting non-indiginous species</h2>
+            <p>MSFD descriptor 2: D2C1, D2C2, D2C3- Measuring levels of non-indigenous fish species. </p>
+        </div>
+        <div>
+            <h3>Recommended methods:</h3>
+            <ul>
+                <li>Metabarcoding</li>
+                <li>qPCR/ddPCR</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="init-fishabund" class="info-section">
+        <div>
+            <h2>Estimating fish and shellfish abundance</h2>
+            <p>MSFD descriptor 2: D2C1, D2C2, D2C3- Measuring levels of non-indigenous fish species.
+                MSFD descriptor 3: D3C1, D3C2, D3C3- Fisheries management to prevent overfishing.
+            </p>
+        </div>
+        <div>
+            <h3>Recommended methods:</h3>
+            <ul>
+                <li>Metabarcoding</li>
+                <li>qPCR/ddPCR</li>
+            </ul>
+        </div>
     </div>
     
     <!-- Methodology -->
