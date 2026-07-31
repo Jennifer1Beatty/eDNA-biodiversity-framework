@@ -49,13 +49,21 @@
     </header>
     
     <h1 class="title">eDNA Interactive Framework</h1>
-
+    <div>
+        <p> Each section represents a key decision point in the utilization of eDNA</p>
+        <p><b>Starting Point:</b> Choose the policy or dataset type that is relevant to you. </p>
+        <p><b>Method Choice:</b> Environmental DNA methods range in their selectivity and their readiness for policy integration. </p>
+        <p><b>Sample Processing:</b> Thorough documentation and metadata is essential for successful eDNA studies that adhere to FAIRe policies. Consistency in sample protocols is necessary for comparable studies.  </p>
+        <p><b>Data Analysis:</b> How sequences are processed is as important as how they are generated, as these decisions impact the ecological interpretation of eDNA data. Again, consistency in processing and proper documentation is necessary to ensure comparability. </p>
+        <p><b>Biodiversity Indicators:</b> The types of biodiversity data that each method can provide. </p>
+        <p><b>Final Product:</b> Final formats, metadata schemas, and submission keys required for uploading reporting parameters to central biodiversity open access portals.</p>
+    </div>
     <!-- Interactive Flowchart Grid -->
     <div class="flowchart-container">
         
         <!-- Suggested Method Column with Custom Arrows -->
         <div class="flow-column">
-            <div class="column-header">Starting Point</div>
+            <div class="column-header">1. Starting Point</div>
             
             <button class="step-btn btn-blue" onclick="showContent('fish-abundance')">Dataset: Fish abundance</button>
             <div style="height: 15px;"></div> 
@@ -87,7 +95,7 @@
 
         <!-- Sampling Scheme -->
         <div class="flow-column">
-            <div class="column-header">Methodology</div>
+            <div class="column-header">2. Methodology</div>
             <button class="step-btn btn-cyan" onclick="showContent('metabarcoding')">Metabarcoding</button>
             <div style="height: 15px;"></div> <!-- Spacing placeholder instead of arrows -->
             <button class="step-btn btn-cyan" onclick="showContent('ddpcr-qpcr')">ddPCR / qPCR</button>
@@ -99,31 +107,63 @@
 
         <!-- Lab Processing -->
         <div class="flow-column">
-            <div class="column-header">Sample Processing</div>
+            <div class="column-header">3. Sample Processing</div>
             <button class="step-btn btn-cyan" onclick="showContent('sampling')">Sample collection</button>
-            <div style="height: 15px;"></div>
+            <!-- Down Arrow from Target Taxa to Method Suggestion -->
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
+                </svg>
+            </div>
             <button class="step-btn btn-cyan" onclick="showContent('dna-extraction')">DNA extraction</button>
-            <div style="height: 15px;"></div>
+            <!-- Down Arrow from Target Taxa to Method Suggestion -->
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
+                </svg>
+            </div>
             <button class="step-btn btn-cyan" onclick="showContent('pcr-primers')">PCR primers</button>
-            <div style="height: 15px;"></div>
+            <!-- Down Arrow from Target Taxa to Method Suggestion -->
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
+                </svg>
+            </div>
             <button class="step-btn btn-cyan" onclick="showContent('library-prep')">Library preparation</button>
-            <div style="height: 15px;"></div>
+            <!-- Down Arrow from Target Taxa to Method Suggestion -->
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
+                </svg>
+            </div>
             <button class="step-btn btn-cyan" onclick="showContent('sequencing-platforms')">Sequencing platforms</button>
         
         </div>
 
         <!-- Data Analysis -->
         <div class="flow-column">
-            <div class="column-header">Data Analysis</div>
-            <button class="step-btn btn-cyan" onclick="showContent('bioinformatics-pipeline')">Bioinformatics pipeline</button>
-            <div style="height: 15px;"></div>
-            <button class="step-btn btn-cyan" onclick="showContent('reference-databases')">Reference databases</button>
+            <div class="column-header">4. Data Analysis</div>
+            <button class="step-btn btn-cyan" onclick="showContent('qc')">Quality check</button>
+            <!-- Down Arrow from Target Taxa to Method Suggestion -->
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
+                </svg>
+            </div>
+            <button class="step-btn btn-cyan" onclick="showContent('denoise')">Denoising</button>
+            <!-- Down Arrow from Target Taxa to Method Suggestion -->
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
+                </svg>
+            </div>
+            <button class="step-btn btn-cyan" onclick="showContent('tax-assign')">Taxonomy assignment</button>
             
         </div>
 
         <!-- Biodiversity Indicator -->
         <div class="flow-column">
-            <div class="column-header">Biodiversity Indicators</div>
+            <div class="column-header">5. Biodiversity Indicators</div>
             <button class="step-btn btn-cyan" onclick="showContent('biodiversity-metrics')">Biodiversity metrics</button>
             <div style="height: 15px;"></div>
             <button class="step-btn btn-cyan" onclick="showContent('evs')">EOV</button>
@@ -135,7 +175,7 @@
 
         <!-- Final Product -->
         <div class="flow-column">
-            <div class="column-header">Final Product</div>
+            <div class="column-header">6. Final Product</div>
             <button class="step-btn btn-diamond" onclick="showContent('metric-submit')">Metric to submit to database</button>
         </div>
 
@@ -144,13 +184,6 @@
     <!-- Dynamic Content Area -->
     <div id="instruction-placeholder" style="text-align: center; color: #777; padding: 40px; background: #eef2f5; border-radius: 6px; border: 2px dashed #ccc;">
         <h3>💡 Click any box in the flowchart above to view details and standard operating procedures.</h3>
-        <p> Each section represents a key decision point in the utilization of eDNA</p>
-        <p><b>Starting Point:</b> Choose the policy or dataset type that is relevant to you. </p>
-        <p><b>Method Choice:</b> Environmental DNA methods range in their selectivity and their readiness for policy integration. </p>
-        <p><b>Sample Processing:</b> Thorough documentation and metadata is essential for successful eDNA studies that adhere to FAIRe policies. Consistency in sample protocols is necessary for comparable studies.  </p>
-        <p><b>Data Analysis:</b> How sequences are processed is as important as how they are generated, as these decisions impact the ecological interpretation of eDNA data. Again, consistency in processing and proper documentation is necessary to ensure comparability. </p>
-        <p><b>Biodiversity Indicators:</b> The types of biodiversity data that each method can provide. </p>
-        <p><b>Final Product:</b> Final formats, metadata schemas, and submission keys required for uploading reporting parameters to central biodiversity open access portals.</p>
     </div>
 
     <!-- Content Sections (Keep exactly the same as previous step) -->
@@ -166,14 +199,14 @@
             <h2>Plankton taxonomy dataset</h2>
             <p>Plankton taxonomic information generated using metabarcoding.</p>
         </div>
-    </div>div>
+    </div>
 
     <div id="invasive-fish" class="info-section">
         <div>
             <h2>Invasive fish species dataset</h2>
             <p>Fish taxonomic information generated using metabarcoding or fish abundance data generated using qPCR or ddPCR.</p>
         </div>
-    </div>div>
+    </div>
 
 
     <div id="method-suggestion" class="info-section">
@@ -507,9 +540,39 @@
         </div>
     </div>
     
-    <div id="reference-databases" class="info-section">
+    <div id="qc" class="info-section">
         <div>
-            <h2>Reference Databases</h2>
+            <h2>Quality check</h2>
+            <p>Reference databases must be chosen carefully and many taxonomic group specific databases exist.</p>
+        </div>
+       <div>
+           <h3>  Suggested databases:</h3>
+            <ul>
+               <li> Microbial eukaryotes: PR2 <a> href="https://pr2-database.org/"</a> </li>
+               <li> Bacteria: Silva </li> 
+                 <li> Other marine species: WoRMS </li>
+            </ul> 
+        </div> 
+    </div>
+    
+    <div id="denoise" class="info-section">
+        <div>
+            <h2>Denoising</h2>
+            <p>Reference databases must be chosen carefully and many taxonomic group specific databases exist.</p>
+        </div>
+       <div>
+           <h3>  Suggested databases:</h3>
+            <ul>
+               <li> Microbial eukaryotes: PR2 <a> href="https://pr2-database.org/"</a> </li>
+               <li> Bacteria: Silva </li> 
+                 <li> Other marine species: WoRMS </li>
+            </ul> 
+        </div> 
+    </div>
+    
+    <div id="tax-assign" class="info-section">
+        <div>
+            <h2>Taxonomic assignment</h2>
             <p>Reference databases must be chosen carefully and many taxonomic group specific databases exist.</p>
         </div>
        <div>
