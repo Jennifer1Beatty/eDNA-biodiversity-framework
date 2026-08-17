@@ -92,11 +92,11 @@
                 </svg>
             </div>
             
-            <button class="step-btn btn-blue" onclick="showContent('init-hab')">Initative: Monitoring harmful algal bloom</button>
+            <button class="step-btn btn-blue" onclick="showContent('init-hab')">Initiative: Monitoring harmful algal bloom</button>
             <div style="height: 15px;"></div> 
-            <button class="step-btn btn-blue" onclick="showContent('init-nonindig')">Initative: Detecting non-indigenous species</button>
+            <button class="step-btn btn-blue" onclick="showContent('init-nonindig')">Initiative: Detecting non-indigenous species</button>
             <div style="height: 15px;"></div>
-            <button class="step-btn btn-blue" onclick="showContent('init-fishabund')">Initative: Estimating fish and shellfish abundance</button>
+            <button class="step-btn btn-blue" onclick="showContent('init-fishabund')">Initiative: Estimating fish and shellfish abundance</button>
         </div>
 
         <!-- Sampling Scheme -->
@@ -135,7 +135,7 @@
                     <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
                 </svg>
             </div>
-            <button class="step-btn btn-cyan" onclick="showContent('library-prep')">Library preparation</button>
+            <button class="step-btn btn-cyan" onclick="showContent('library-prep')">Preparation for sequencing</button>
             <!-- Down Arrow from Target Taxa to Method Suggestion -->
             <div class="arrow-box">
                 <svg class="arrow-svg" viewBox="0 0 24 24">
@@ -198,6 +198,13 @@
             <h2>Fish abundance dataset</h2>
             <p>Fish abundance data generated using qPCR or ddPCR analysis. </p>
         </div>
+         <div>
+            <h3>Examples of application:</h3>
+            <ul>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
     </div>
 
     <div id="plankton-tax" class="info-section">
@@ -205,12 +212,26 @@
             <h2>Plankton taxonomy dataset</h2>
             <p>Plankton taxonomic information generated using metabarcoding.</p>
         </div>
+         <div>
+            <h3>Examples of application:</h3>
+            <ul>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
     </div>
 
     <div id="invasive-fish" class="info-section">
         <div>
             <h2>Invasive fish species dataset</h2>
             <p>Fish taxonomic information generated using metabarcoding or fish abundance data generated using qPCR or ddPCR.</p>
+        </div>
+         <div>
+            <h3>Examples of application:</h3>
+            <ul>
+                <li></li>
+                <li></li>
+            </ul>
         </div>
     </div>
 
@@ -233,6 +254,13 @@
                 <li>qPCR/ddPCR</li>
             </ul>
         </div>
+         <div>
+            <h3>Examples of application:</h3>
+            <ul>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
     </div>
 
     <div id="init-nonindig" class="info-section">
@@ -245,6 +273,13 @@
             <ul>
                 <li>Metabarcoding</li>
                 <li>qPCR/ddPCR</li>
+            </ul>
+        </div>
+        <div>
+            <h3>Examples of application:</h3>
+            <ul>
+                <li></li>
+                <li></li>
             </ul>
         </div>
     </div>
@@ -263,6 +298,13 @@
                 <li>qPCR/ddPCR</li>
             </ul>
         </div>
+         <div>
+            <h3>Examples of application:</h3>
+            <ul>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
     </div>
     
     <!-- Methodology -->
@@ -278,18 +320,15 @@
             <ul>
                 <li>Non-invasive </li>
                 <li> Relatively inexpensive</li>
+                <li>Provides detailed taxonomic information about certain groups</li>
             </ul>
        </div>
         <div>
             <h3>Cons:</h3>
             <ul>
-                <li>Low taxonomic specificity of primers </li>
                 <li> Incomplete reference database</li>
-                <li>DNA degradation and dispersal </li>
-                <li> Abundance estimation of pluricellular organisms</li>
-                <li>Lack of Standardization </li>
-                <li> Cannot be used for abundance</li>
-                
+                <li>Does not provide abundance data</li>
+                <li>Low taxonomic specificity of primers</li>
             </ul>
        </div>
         <div>
@@ -320,6 +359,7 @@
             <ul>
                 <li> Non-invasive </li>
                 <li> Generates abundances of organisms</li>
+                <li>Provides detailed taxonomic information about certain groups</li>
             </ul>
        </div>
         <div>
@@ -457,7 +497,7 @@
    <div id="dna-extraction" class="info-section">
        <div> <h2>DNA Extraction</h2>
         <p>DNA can be extracted using commercial kits or from personal lab protocols. 
-            Some testing may be required to optimize for your organisms of choice, as different cell types may be more difficult to break apart for extraction. </p>
+            Some testing may be required to optimize for your organisms of choice, as different cell types may be more difficult to break apart for extraction. Commercial kits are standardized and easy to use but harder to adust to sample needs</p>
        </div>
         <div>
             <h3>General resources:</h3>
@@ -510,7 +550,7 @@
 
     <div id="library-prep" class="info-section">
         <div>
-            <h2>Library Preparation</h2>
+            <h2>Sequencing Preparation</h2>
             <p>SOPs for index ligation, cleanups, absolute quantification, and pooling controls to prevent cross-contamination.</p>
         </div>
     </div>
@@ -556,6 +596,13 @@
                 <li> General resources: </li> 
                 <li> Resources for specialists: </li> 
             </ul> 
+        </div>
+         <div>
+            <h3>Sequence data repositories:</h3>
+            <ul>
+                <li>European Nucleotide Archive (ENA): <a href="https://www.ebi.ac.uk/ena/browser/home ">European Nucleotide Archive (ENA)</a> </li>
+                <li></li>
+            </ul>
         </div>
     </div>
     
@@ -660,6 +707,20 @@
         <div>
             <h2>EVs (Essential Variables)</h2>
             <p>Mapping eDNA outputs directly to national or global Essential Biodiversity Variables (EBVs) frameworks.</p>
+        </div>
+    </div>
+
+    <div id="wfd" class="info-section">
+        <div>
+            <h2>WFD (Water Framework Directive)</h2>
+            <p>Mapping eDNA outputs directly to national or global Water Framework Directive (WFD).</p>
+        </div>
+    </div>
+
+    <div id="msfd" class="info-section">
+        <div>
+            <h2>MSFD (Marine Strategy Framework Directive)</h2>
+            <p>Mapping eDNA outputs directly to national or global Marine Strategy Framework Directive (MSFD).</p>
         </div>
     </div>
 
