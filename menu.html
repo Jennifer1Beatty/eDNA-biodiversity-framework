@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eDNA Interactive Framework</title>
+    <!-- <link rel="icon" href="/MARCO-BOLO_logo_col.png" type="/png"> -->
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { margin: 0; padding: 20px; paddting-top:40 px; background-color: #f4f7f6; color: #333; }
+
+        /* Banner image of MARCO-BOLO logo */
+        .main-header {text-align: center; }
+        
+        h1.title { text-align: center; color: #1e3d59; border: 2px solid #b5d5e5; padding: 15px; background: #f5fafd; margin-bottom: 30px; }
+        
+        /* For debugging*/
+
+        /* Navigation bar style*/
+        nav {
+            border: 5px solid #b5d5e5;
+            margin: 1rem auto;
+            background-color: #f5fafd ;
+            overflow: visible;
+            position: absolute;
+            z-index: 1000;
+            width: 97%;
+            transform: translateY(0);
+            overflow: visible;
+            display: flex;
+            justify-content: left;
+            text-align: left;
+        }
+        
+        /* Navigation unlisted list style*/
+        nav ul {
+            flex-flow: row-wrap;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: left;
+            justify-content: space-evenly;
+            position: relative;
+        }
+
+        /* Navigation- make the menu items in a row*/
+        nav li {
+            display: inline-block;
+        }
+
+        /* Navigation- format the text of the links */
+        nav a {
+            color: #174276;
+            text-decoration: none;
+            font-size: 1.2 rem;
+            font-weight: 600;
+            display: block;
+            padding: 0.5rem 1rem;
+        }
+
+        /* Navigation- format the text of the links to change color when hovering */
+        nav a:hover {
+            color: #1e3d59;
+            background-color: #00bbf9;
+        }
+
+        /* Navigation- format the background of the dropdown menu */
+        nav ul ul  {
+            color: #f5fafd ;
+            font-size: 0.5 rem;
+            font-weight: 250;
+            padding: 1rem 2rem;
+            text-align: left;
+            width: 100%;
+            margin: 0;
+            position: absolute;
+            z-index: 1000;
+            background-color: #b5d5e5;
+        }
+
+        nav ul ul a {
+            color: #174276;
+            font-size: 0.5 rem;
+            font-weight: 250;
+            padding: 1rem 2rem;
+        }
+
+
+        .navbar details{
+            display: flex; 
+            flex-direction:row;
+        }
+
+        .navbar details ul {
+            background-color: #f5fafd;
+            list-style-type: "";
+            gap: var(--size-6xs);
+            text-align: start;
+            justify: center;
+        }
+
+        .navbar details li {
+            margin-block-end: var(--gap);
+        }
+
+       .navbar details summary {
+        background-color: #f5fafd ;
+        border-color: #174276;
+        color: #e3d5ca;
+        cursor: pointer;
+        padding: 1rem;
+        width: 200px;
+        order:3;
+        }
+     
+
+
+        /* Interactive Flowchart Container */
+        .flowchart-container { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 40px; overflow-x: auto; }
+        
+        /* Column Categories */
+        .flow-column { display: flex; flex-direction: column; gap: 15px; background: #fff; padding: 15px 10px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-top: 5px solid #174276; }
+        .column-header { background: #174276; color: white; text-align: center; padding: 10px 5px; font-weight: bold; font-size: 14px; border-radius: 4px; min-height: 45px; display: flex; align-items: center; justify-content: center; margin-bottom: 5px; }
+        
+        /* Clickable Flowchart Step Buttons */
+        .step-btn { display: block; width: 100%; padding: 12px 8px; border: none; border-radius: 20px; text-align: center; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; text-decoration: none; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative; z-index: 2; }
+        
+        /* Color coding matching your image styling */
+        .btn-blue { background: #1d3557; color: white; }
+        .btn-cyan { background: #00f5d4; color: #014f45; }
+        .btn-diamond { background: #00bbf9; color: white; border-radius: 4px; } 
+
+        .step-btn:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); opacity: 0.9; }
+
+        /* SVG Arrow container styles */
+        .arrow-box { display: flex; justify-content: center; align-items: center; height: 25px; margin: -5px 0; }
+        .arrow-svg { width: 24px; height: 24px; fill: #174276; }
+
+        /* Information Display Sections */
+        .info-section { background: white; padding: 30px; margin-top: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: none; border-left: 6px solid #00bbf9; }
+        .info-section.active { display: block; animation: fadeIn 0.3s ease-in; }
+        .info-section h2 { color: #174276; margin-top: 0; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <header class="main-header" role="banner">
+      <img src="MARCO-BOLO_logo_col.jpg" alt="MARCO-BOLO Logo" width="auto" height="100"/>
+    </header>
+    
+    <h1 class="title">eDNA Interactive Framework</h1>
+    <div>
+        <p> Each section represents a key decision point in the utilization of eDNA for biodiversity monitoring and provides example workflows. 
+            Click on the button for information on the choices involved in each step and for resources to guide decision making. 
+            Thorough documentation and metadata is essential for successful eDNA studies that adhere to FAIRe policies and are comparable.</p>
+        <div>
+            <ol>
+                <li><b>User Case:</b> Example data types or policy questions for implementing eDNA.</li>
+                <li><b>Method Choice:</b>  Information on the selectivity and readiness of environmental DNA methods for policy integration.  </li>
+                <li><b>Sample Processing:</b> Field and lab actions to generate DNA sequences.</li>
+                <li><b>Sequence Processing:</b> Key steps in the bioinformatic pipelines used for DNA sequence processing. </li>
+                <li><b>Data Analysis:</b> The types of biodiversity data that each method can provide. </li>
+                <li><b>Policy Indicators:</b> Final formats, metadata schemas, and submission keys required for uploading reporting parameters to central biodiversity open access portals. </li>
+            </ol>
+        </div>
+    </div>
+    <!-- Navigation Bar Grid -->
+    <div style="display: flex; padding-bottom: 60px">
+        <nav id="navbar">
+            <h3>User Case:</h3>
+            <ul>
+                <li><a href="overview.html">Overview</a></li>
+                <li>
+                    <details name="subnav">
+                        <summary><a href="data-menu.html">Dataset</a></summary>
+                        <ul>
+                            <li><a href="data-plankton-taxa.html">Dataset: Plankton Taxonomy</a></li>
+                            <li><a href="data-fish-abund.html">Dataset: Fish Abundance</a></li>
+                            <li><a href="data-fish-invase.html">Dataset: Invasive Fish Species</a></li>
+                        </ul>
+                     </details>
+                </li>
+                <li>
+                    <details name="subnav">
+                        <summary><a href="policy-menu.html">Policy</a></summary>
+                        <ul>
+                            <li><a href="policy-habs.html">Policy: Harmful Algal Blooms</a></li>
+                            <li><a href="policy-fish-abund.html">Policy: Fish Abundance</a></li>
+                            <li><a href="policy-invase.html">Policy: Invasive Fish Species</a></li>
+                        </ul>
+                     </details>
+                </li>
+            </ul>
+        </nav>           
+    </div>
+
+    <!-- Interactive Flowchart Grid -->
+    <div class="flowchart-container" style="padding: 40px;">
+        
+        <!-- Suggested Method Column with Custom Arrows -->
+        <div class="flow-column">
+            <div class="column-header">1. User Case</div>
+         </div>
+
+        <!-- Sampling Scheme -->
+        <div class="flow-column">
+            <div class="column-header">2. Methodology</div>
+          
+        </div>
+
+        <!-- Lab Processing -->
+        <div class="flow-column">
+            <div class="column-header">3. Sample Processing</div>
+        
+        </div>
+
+        <!-- Data Analysis -->
+        <div class="flow-column">
+            <div class="column-header">4. Data Analysis</div>
+            
+        </div>
+
+        <!-- Biodiversity Indicator -->
+        <div class="flow-column">
+            <div class="column-header">5. Biodiversity Indicators</div>
+        </div>
+
+        <!-- Final Product -->
+        <div class="flow-column">
+            <div class="column-header">6. Policy Indicators</div>
+        </div>
+
+    </div>
+
+    <!-- Dynamic Content Area -->
+    <div id="instruction-placeholder" style="text-align: center; color: #777; padding: 40px; background: #eef2f5; border-radius: 6px; border: 2px dashed #ccc;">
+        <h3>💡 Select a starting point above to view details and standard operating procedures.</h3>
+    </div>
+    <!-- Navigation Script -->
+    <script>
+        function showContent(sectionId) {
+            document.getElementById('instruction-placeholder').style.display = 'none';
+            const sections = document.querySelectorAll('.info-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+            const activeSection = document.getElementById(sectionId);
+            activeSection.classList.add('active');
+            activeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    </script>
+  <body>
+</html>

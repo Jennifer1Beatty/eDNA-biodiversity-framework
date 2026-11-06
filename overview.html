@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eDNA Interactive Framework</title>
+    <!-- <link rel="icon" href="/MARCO-BOLO_logo_col.png" type="/png"> -->
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { margin: 0; padding: 20px; background-color: #f4f7f6; color: #333; }
+
+        /* Banner image of MARCO-BOLO logo */
+        .main-header {text-align: center; }
+        
+        h1.title { text-align: center; color: #1e3d59; border: 2px solid #b5d5e5; padding: 15px; background: #f5fafd; margin-bottom: 30px; }
+
+        /* Navigation bar style*/
+        nav {
+            border: 5px solid #b5d5e5;
+            margin: 1rem auto;
+            background-color: #f5fafd ;
+            overflow: visible;
+            position: absolute;
+            z-index: 1000;
+            width: 97%;
+            transform: translateY(0);
+            overflow: visible;
+            display: flex;
+            justify-content: left;
+            text-align: left;
+        }
+        
+        /* Navigation unlisted list style*/
+        nav ul {
+            flex-flow: row-wrap;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: left;
+            justify-content: space-evenly;
+            position: relative;
+        }
+
+        /* Navigation- make the menu items in a row*/
+        nav li {
+            display: inline-block;
+        }
+
+        /* Navigation- format the text of the links */
+        nav a {
+            color: #174276;
+            text-decoration: none;
+            font-size: 1.2 rem;
+            font-weight: 600;
+            display: block;
+            padding: 0.5rem 1rem;
+        }
+
+        /* Navigation- format the text of the links to change color when hovering */
+        nav a:hover {
+            color: #1e3d59;
+            background-color: #00bbf9;
+        }
+
+        /* Navigation- format the background of the dropdown menu */
+        nav ul ul  {
+            color: #f5fafd ;
+            font-size: 0.5 rem;
+            font-weight: 250;
+            padding: 1rem 2rem;
+            text-align: left;
+            width: 100%;
+            margin: 0;
+            position: absolute;
+            z-index: 1000;
+            background-color: #b5d5e5;
+        }
+
+        nav ul ul a {
+            color: #174276;
+            font-size: 0.5 rem;
+            font-weight: 250;
+            padding: 1rem 2rem;
+        }
+
+
+        .navbar details{
+            display: flex; 
+            flex-direction:row;
+        }
+
+        .navbar details ul {
+            background-color: #f5fafd;
+            list-style-type: "";
+            gap: var(--size-6xs);
+            text-align: start;
+            justify: center;
+        }
+
+        .navbar details li {
+            margin-block-end: var(--gap);
+        }
+
+       .navbar details summary {
+        background-color: #f5fafd ;
+        border-color: #174276;
+        color: #e3d5ca;
+        cursor: pointer;
+        padding: 1rem;
+        width: 200px;
+        order:3;
+        }
+        
+        /* Interactive Flowchart Container */
+        .flowchart-container { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 40px; overflow-x: auto; }
+        
+        /* Column Categories */
+        .flow-column { display: flex; flex-direction: column; gap: 15px; background: #fff; padding: 15px 10px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-top: 5px solid #174276; }
+        .column-header { background: #174276; color: white; text-align: center; padding: 10px 5px; font-weight: bold; font-size: 14px; border-radius: 4px; min-height: 45px; display: flex; align-items: center; justify-content: center; margin-bottom: 5px; }
+        
+        /* Clickable Flowchart Step Buttons */
+        .step-btn { display: block; width: 100%; padding: 12px 8px; border: none; border-radius: 20px; text-align: center; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; text-decoration: none; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative; z-index: 2; }
+        
+        /* Color coding matching your image styling */
+        .btn-blue { background: #1d3557; color: white; }
+        .btn-cyan { background: #00f5d4; color: #014f45; }
+        .btn-diamond { background: #00bbf9; color: white; border-radius: 4px; } 
+
+        .step-btn:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); opacity: 0.9; }
+
+        /* SVG Arrow container styles */
+        .arrow-box { display: flex; justify-content: center; align-items: center; height: 25px; margin: -5px 0; }
+        .arrow-svg { width: 24px; height: 24px; fill: #174276; }
+
+        /* Information Display Sections */
+        .info-section { background: white; padding: 30px; margin-top: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: none; border-left: 6px solid #00bbf9; }
+        .info-section.active { display: block; animation: fadeIn 0.3s ease-in; }
+        .info-section h2 { color: #174276; margin-top: 0; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <header class="main-header" role="banner">
+      <img src="MARCO-BOLO_logo_col.jpg" alt="MARCO-BOLO Logo" width="auto" height="100"/>
+    </header>
+    
+    <h1 class="title">eDNA Interactive Framework</h1>
+    <div>
+        <p> Each section represents a key decision point in the utilization of eDNA for biodiversity monitoring and provides example workflows. 
+            Click on the button for information on the choices involved in each step and for resources to guide decision making. 
+            Thorough documentation and metadata is essential for successful eDNA studies that adhere to FAIRe policies and are comparable.</p>
+        <div>
+            <ol>
+                <li><b>User Case:</b> Example data types or policy questions for implementing eDNA.</li>
+                <li><b>Method Choice:</b>  Information on the selectivity and readiness of environmental DNA methods for policy integration.  </li>
+                <li><b>Sample Processing:</b> Field and lab actions to generate DNA sequences.</li>
+                <li><b>Sequencing Processing:</b> Key steps in the bioinformatic pipelines used for DNA sequence processing. </li>
+                <li><b>Data Analysis:</b> The types of biodiversity data that each method can provide. </li>
+                <li><b>Policy Indicators:</b> Final formats, metadata schemas, and submission keys required for uploading reporting parameters to central biodiversity open access portals. </li>
+            </ol>
+        </div>
+      </div>
+
+    <!-- Navigation Bar Grid -->
+    <div style="display: flex; padding-bottom: 60px">
+        <nav id="navbar">
+            <h3>Starting Point:</h3>
+            <ul>
+                <li><a href="overview.html">Overview</a></li>
+                <li>
+                    <details name="subnav">
+                        <summary><a href="data-menu.html">Dataset</a></summary>
+                        <ul>
+                            <li><a href="data-plankton-taxa.html">Dataset: Plankton Taxonomy</a></li>
+                            <li><a href="data-fish-abund.html">Dataset: Fish Abundance</a></li>
+                            <li><a href="data-fish-invase.html">Dataset: Invasive Fish Species</a></li>
+                        </ul>
+                     </details>
+                </li>
+                <li>
+                    <details name="subnav">
+                        <summary><a href="policy-menu.html">Policy</a></summary>
+                        <ul>
+                            <li><a href="policy-habs.html">Policy: Harmful Algal Blooms</a></li>
+                            <li><a href="policy-fish-abund.html">Policy: Fish Abundance</a></li>
+                            <li><a href="policy-invase.html">Policy: Invasive Fish Species</a></li>
+                        </ul>
+                     </details>
+                </li>
+            </ul>
+        </nav>           
+    </div>
+
+    <!-- Interactive Flowchart Grid -->
+    <div class="flowchart-container">
+        
+        <!-- Suggested Method Column with Custom Arrows -->
+        <div class="flow-column">
+            <div class="column-header">1. User Case</div>
+            
+            <button class="step-btn btn-blue" onclick="showContent('fish-abundance')">Dataset: Fish abundance</button>
+            <div style="height: 15px;"></div> 
+            <button class="step-btn btn-blue" onclick="showContent('plankton-tax')">Dataset: Plankton taxonomy</button>
+            <div style="height: 15px;"></div> 
+            <button class="step-btn btn-blue" onclick="showContent('invasive-fish')">Dataset: Invasive fish species</button>
+            <!-- Down Arrow from Target Taxa to Method Suggestion -->
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
+                </svg>
+            </div>
+            
+            <button class="step-btn btn-cyan" onclick="showContent('method-suggestion')">Method suggestion</button>
+            
+            <!-- Up Arrow from Policy Initiative to Method Suggestion -->
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/>
+                </svg>
+            </div>
+            
+            <button class="step-btn btn-blue" onclick="showContent('init-hab')">Initiative: Monitoring harmful algal bloom</button>
+            <div style="height: 15px;"></div> 
+            <button class="step-btn btn-blue" onclick="showContent('init-nonindig')">Initiative: Detecting non-indigenous species</button>
+            <div style="height: 15px;"></div>
+            <button class="step-btn btn-blue" onclick="showContent('init-fishabund')">Initiative: Estimating fish and shellfish abundance</button>
+        </div>
+
+        <!-- Sampling Scheme -->
+        <div class="flow-column">
+            <div class="column-header">2. Methodology</div>
+            <button class="step-btn btn-cyan" onclick="showContent('metabarcoding')">Metabarcoding</button>
+            <div style="height: 15px;"></div> <!-- Spacing placeholder instead of arrows -->
+            <button class="step-btn btn-cyan" onclick="showContent('ddpcr-qpcr')">ddPCR / qPCR</button>
+            <div style="height: 15px;"></div>
+            <button class="step-btn btn-cyan" onclick="showContent('emerging-tech')">Emerging technologies</button>
+        </div>
+
+        <!-- Lab Processing -->
+        <div class="flow-column">
+            <div class="column-header">3. Sample Processing</div>
+            <button class="step-btn btn-cyan" onclick="showContent('sampling')">Sample collection</button>
+            <!-- Down Arrow from Target Taxa to Method Suggestion -->
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
+                </svg>
+            </div>
+            <button class="step-btn btn-cyan" onclick="showContent('dna-extraction')">DNA extraction</button>
+            <!-- Down Arrow from Target Taxa to Method Suggestion -->
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
+                </svg>
+            </div>
+            <button class="step-btn btn-cyan" onclick="showContent('pcr-primers')">PCR primers</button>
+            <!-- Down Arrow from Target Taxa to Method Suggestion -->
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
+                </svg>
+            </div>
+            <button class="step-btn btn-cyan" onclick="showContent('library-prep')">Preparation for sequencing</button>
+            <!-- Down Arrow from Target Taxa to Method Suggestion -->
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
+                </svg>
+            </div>
+            <button class="step-btn btn-cyan" onclick="showContent('sequencing-platforms')">Sequencing platforms</button>
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
+                </svg>
+            </div>
+            <button class="step-btn btn-diamond" onclick="showContent('submit-seqs')">Submit raw sequences</button>
+        </div>
+
+        <!-- Data Analysis -->
+        <div class="flow-column">
+            <div class="column-header">4. Sequence Processing</div>
+            <button class="step-btn btn-cyan" onclick="showContent('qc')">Quality check</button>
+            <!-- Down Arrow from Target Taxa to Method Suggestion -->
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
+                </svg>
+            </div>
+            <button class="step-btn btn-cyan" onclick="showContent('denoise')">Denoising/Clustering</button>
+            <!-- Down Arrow from Target Taxa to Method Suggestion -->
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
+                </svg>
+            </div>
+            <button class="step-btn btn-cyan" onclick="showContent('tax-assign')">Taxonomy assignment</button>
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
+                </svg>
+            </div>
+            <button class="step-btn btn-diamond" onclick="showContent('submit-taxa')">Submit presence/absence data</button>
+        </div>
+
+        <!-- Biodiversity Indicator -->
+        <div class="flow-column">
+            <div class="column-header">5. Data Analysis </div>
+            <button class="step-btn btn-cyan" onclick="showContent('biodiversity-metrics')">Biodiversity metrics</button>
+            <div style="height: 15px;"></div>
+            <button class="step-btn btn-cyan" onclick="showContent('taxa-abund')">Taxa Abundance</button>
+        </div>
+
+        <!-- Final Product -->
+        <div class="flow-column">
+            <div class="column-header">6. Policy Indicators</div>
+            <button class="step-btn btn-cyan" onclick="showContent('evs')">EOV</button>
+            <div style="height: 15px;"></div>
+            <button class="step-btn btn-cyan" onclick="showContent('evs')">WFD</button>
+            <div style="height: 15px;"></div>
+            <button class="step-btn btn-cyan" onclick="showContent('evs')">MSFD</button>
+            <div style="height: 15px;"></div>
+            <button class="step-btn btn-diamond" onclick="showContent('submit-metic')">Data Management</button>
+        </div>
+
+    </div>
+
+    <!-- Dynamic Content Area -->
+    <div id="instruction-placeholder" style="text-align: center; color: #777; padding: 40px; background: #eef2f5; border-radius: 6px; border: 2px dashed #ccc;">
+        <h3>💡 Click any box in the flowchart above to view details and standard operating procedures.</h3>
+    </div>
+
+    <!-- Content Sections (Keep exactly the same as previous step) -->
+    <div id="fish-abundance" class="info-section">
+        <div>
+            <h2>Fish abundance dataset</h2>
+            <p>Fish abundance data generated using qPCR or ddPCR analysis. </p>
+        </div>
+         <div>
+            <h3>Examples of application:</h3>
+            <ul>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="plankton-tax" class="info-section">
+        <div>
+            <h2>Plankton taxonomy dataset</h2>
+            <p>Plankton taxonomic information generated using metabarcoding.</p>
+        </div>
+         <div>
+            <h3>Examples of application:</h3>
+            <ul>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="invasive-fish" class="info-section">
+        <div>
+            <h2>Invasive fish species dataset</h2>
+            <p>Fish taxonomic information generated using metabarcoding or fish abundance data generated using qPCR or ddPCR.</p>
+        </div>
+         <div>
+            <h3>Examples of application:</h3>
+            <ul>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div id="method-suggestion" class="info-section">
+        <h2>Method Suggestion</h2>
+        <p>Based on the target taxa, choose between targeted species detection or broad-scale community profiling.
+         Sampling considerations that impact biodiversity assessment include: sampling depth, volume, daily timing.</p>
+    </div>
+
+    <div id="init-hab" class="info-section">
+        <div>
+            <h2>Monitoring harmful algal bloom</h2>
+            <p>MSFD descriptor 5: D5C3, D5C4, D5C6- Monitoring the impact of eutrophication on harmful algal species abundance</p>
+        </div>
+        <div>
+            <h3>Recommended methods:</h3>
+            <ul>
+                <li>Metabarcoding</li>
+                <li>qPCR/ddPCR</li>
+            </ul>
+        </div>
+         <div>
+            <h3>Examples of application:</h3>
+            <ul>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="init-nonindig" class="info-section">
+        <div>
+            <h2>Detecting non-indiginous species</h2>
+            <p>MSFD descriptor 2: D2C1, D2C2, D2C3- Measuring levels of non-indigenous fish species. </p>
+        </div>
+        <div>
+            <h3>Recommended methods:</h3>
+            <ul>
+                <li>Metabarcoding</li>
+                <li>qPCR/ddPCR</li>
+            </ul>
+        </div>
+        <div>
+            <h3>Examples of application:</h3>
+            <ul>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="init-fishabund" class="info-section">
+        <div>
+            <h2>Estimating fish and shellfish abundance</h2>
+            <p>MSFD descriptor 2: D2C1, D2C2, D2C3- Measuring levels of non-indigenous fish species.
+                MSFD descriptor 3: D3C1, D3C2, D3C3- Fisheries management to prevent overfishing.
+            </p>
+        </div>
+        <div>
+            <h3>Recommended methods:</h3>
+            <ul>
+                <li>Metabarcoding</li>
+                <li>qPCR/ddPCR</li>
+            </ul>
+        </div>
+         <div>
+            <h3>Examples of application:</h3>
+            <ul>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Methodology -->
+    <div id="metabarcoding" class="info-section">
+        <div>
+            <h2>Metabarcoding</h2>
+            <p>Utilized for broad biodiversity assessments across multiple trophic levels simultaneously using high-throughput sequencing panels. 
+                Metabarcoding yields taxonomic composition of the community but does not provide absolute species abundance. 
+                It involves extracting the DNA from the environment and amplifying DNA regions targeting specific taxonomic groups using PCR.</p>
+        </div>
+        <div>
+            <h3>Pros:</h3>
+            <ul>
+                <li>Non-invasive </li>
+                <li> Relatively inexpensive</li>
+                <li>Provides detailed taxonomic information about certain groups</li>
+            </ul>
+       </div>
+        <div>
+            <h3>Cons:</h3>
+            <ul>
+                <li> Incomplete reference database</li>
+                <li>Does not provide abundance data</li>
+                <li>Low taxonomic specificity of primers</li>
+            </ul>
+       </div>
+        <div>
+            <h3>General resources:</h3>
+            <ul>
+               <li> Link 1 </li>
+               <li> Link 2</li> 
+            </ul>
+       </div>
+        <div>
+            <h3>Resources for specialists:</h3>
+            <ul>
+               <li> Link 1 </li>
+               <li> Link 2</li> 
+            </ul>
+       </div>
+    </div>
+
+    <div id="ddpcr-qpcr" class="info-section">
+        <div>
+            <h2>ddPCR / qPCR</h2>
+            <p>Best for targeted species monitoring (e.g., invasive pests or highly endangered target species) where quantitative sensitivity is paramount.
+            Quantitative PCR (qPCR) and digital droplet PCR (ddPCR) yields information on the presence and abundance of specific targeted taxa or species. 
+            It involves extracting DNA from the environment and amplifying DNA regions specific to highly specified taxonomic groups using qPCR and ddPCR machines.</p>
+        </div>
+         <div>
+            <h3>Pros:</h3>
+            <ul>
+                <li> Non-invasive </li>
+                <li> Generates abundances of organisms</li>
+                <li>Provides detailed taxonomic information about certain groups</li>
+            </ul>
+       </div>
+        <div>
+            <h3>Cons:</h3>
+            <ul>
+                <li> Limited species specific primers </li>
+                <li> Incomplete reference database</li>          
+            </ul>
+       </div>
+        <div>
+            <h3>General resources:</h3>
+            <ul>
+               <li> Link 1</li>
+               <li> Link 2</li> 
+            </ul>
+       </div>
+        <div>
+            <h3>Resources for specialists:</h3>
+            <ul>
+               <li> Link 1 </li>
+               <li> Link 2</li> 
+            </ul>
+       </div>
+    </div>
+    <div id="metagenomics" class="info-section">
+        <div>
+            <h2>Metagenomics</h2>
+            <p>Shotgun sequencing applications used to capture whole environmental genomes without targeted PCR bias.
+             Metagenomics yields taxonomic identification and potential function of organisms present. 
+            It involves extracting DNA from the environment and sequencing the DNA without targeting with specific primers or amplifying targeted regions using PCR.</p>
+        </div>
+        <div>
+            <h3>Pros:</h3>
+            <ul>
+                <li> Non-invasive </li>
+                <li> PCR independent approach </li>
+            </ul>
+       </div>
+        <div>
+            <h3>Cons:</h3>
+            <ul>
+                <li> Computational complex </li>              
+            </ul>
+       </div>
+        <div>
+            <h3>General resources:</h3>
+            <ul>
+               <li> Link 1</li>
+               <li> Link 2</li> 
+            </ul>
+       </div>
+        <div>
+            <h3>Resources for specialists:</h3>
+            <ul>
+               <li> Link 1 </li>
+               <li> Link 2</li> 
+            </ul>
+       </div>
+    </div>
+
+     <div id="metatranscriptomics" class="info-section">
+        <div>
+            <h2>Metatranscriptomics</h2>
+            <p>Shotgun sequencing applications used to capture whole environmental transcripts without targeted PCR bias.
+            Metatranscriptomics involves extracting RNA from the environment and sequencing the DNA without targeting with specific primers or amplifying targeted regions using PCR.</p>
+        </div>
+         <div>
+            <h3>Pros:</h3>
+            <ul>
+                <li> Non-invasive </li>
+                <li> PCR independent approach </li>
+            </ul>
+       </div>
+        <div>
+            <h3>Cons:</h3>
+            <ul>
+                <li> Computational complex </li>              
+            </ul>
+       </div>
+         <div>
+            <h3>General resources:</h3>
+            <ul>
+               <li> Link 1</li>
+               <li> Link 2</li> 
+            </ul>
+       </div>
+        <div>
+            <h3>Resources for specialists:</h3>
+            <ul>
+               <li> Link 1 </li>
+               <li> Link 2</li> 
+            </ul>
+       </div>
+     </div>
+    
+     <!-- Sample Processing -->
+     <div id="sampling" class="info-section">
+        <h2>Sample collection</h2>
+         <div>
+            <h3>Importance elements to consider are: </h3>
+            <ul>
+                <li> Depth of samples in water or soil </li>  
+                <li> Volume of material processed </li>
+                <li> Processing time of material </li>
+                <li> Filter choice</li>
+                <li> Preservation of samples </li>
+            </ul>
+       </div>
+        <div>
+            <h3>Metadata should include at the very least:</h3>
+            <ul>
+                <li> Location (Latitude, Longitude) of sampling </li> 
+                <li> Date and time of sampling </li>
+                <li> Depth of sampling </li>
+                <li> Volume of material processed </li>
+                <li> Environmental conditions (ie. temperature) </li>
+            </ul>
+       </div>
+         <div>
+            <h3>General resources:</h3>
+            <ul>
+               <li> Link 1</li>
+               <li> Link 2</li> 
+            </ul>
+       </div>
+        <div>
+            <h3>Resources for specialists:</h3>
+            <ul>
+               <li> Link 1 </li>
+               <li> Link 2</li> 
+            </ul>
+       </div>
+    </div>
+    
+   <div id="dna-extraction" class="info-section">
+       <div> <h2>DNA Extraction</h2>
+        <p>DNA can be extracted using commercial kits or from personal lab protocols. 
+            Some testing may be required to optimize for your organisms of choice, as different cell types may be more difficult to break apart for extraction. Commercial kits are standardized and easy to use but harder to adust to sample needs</p>
+       </div>
+        <div>
+            <h3>General resources:</h3>
+            <ul>
+               <li> Link 1</li>
+               <li> Link 2</li> 
+            </ul>
+       </div>
+        <div>
+            <h3>Resources for specialists:</h3>
+            <ul>
+               <li> Link 1 </li>
+               <li> Link 2</li> 
+            </ul>
+       </div>
+   </div>
+    
+    <div id="pcr-primers" class="info-section">
+        <div>
+            <h2>PCR Primers</h2>
+            <p> qPCR/ddPCR primers are more targeted and need to be carefully designed to ensure accuracy. </p>
+            <p> Metabarcoding primers target entire groups: Fish (COI, 16S, 12S), plankton (18S- microbial eukaryotes; 16S- prokaryotes), fungi, virus, mammal, birds. </p>
+        </div>
+        <div>
+            <h3>Metabarcoding targets:</h3>
+            <ul>
+               <li> Bacteria- 16S </li>
+               <li> Eukaryotes- 18S and/or 28S</li> 
+                <li> Metazoan- COI </li>
+               <li> Fish- 12S </li> 
+                <li> Fungi- ITS </li>
+               <li> Viral- ? </li> 
+            </ul>
+       </div>
+        <div>
+            <h3>General resources:</h3>
+            <ul>
+               <li> Link 1</li>
+               <li> Link 2</li> 
+            </ul>
+       </div>
+        <div>
+            <h3>Resources for specialists:</h3>
+            <ul>
+               <li> Link 1 </li>
+               <li> Link 2</li> 
+            </ul>
+       </div>
+    </div>
+
+    <div id="library-prep" class="info-section">
+        <div>
+            <h2>Sequencing Preparation</h2>
+            <p>SOPs for index ligation, cleanups, absolute quantification, and pooling controls to prevent cross-contamination.</p>
+        </div>
+    </div>
+    
+    <div id="sequencing-platforms" class="info-section">
+        <div>
+            <h2>Sequencing Platforms</h2>
+            <p>Operational instructions for benchmarking standard Illumina platforms vs. long-read options like Oxford Nanopore based on the survey scope.
+            Must ensure that sequences are placed in the proper archive.</p>
+        </div>
+        <div>
+           <h3>Metabarcoding:</h3>
+            <h4> Short-reads with Illumina sequencing: </h4>
+            <ul>
+               <li> Pros: Quick, less expensive, extensive support for sample analysis</li>
+               <li> Cons: Miss certain groups with large repeats</li> 
+                <li> Resources: </li> 
+            </ul> 
+            <h4> Long-reads with Oxford Nanopore sequencing: </h4>
+            <ul>
+               <li> Pros: Better taxonomic resolution </li>
+               <li> Cons: Less resources for sample analysis since emerging technology</li>
+                <li> General resources: </li> 
+                <li> Resources for specialists: </li> 
+            </ul> 
+        </div>
+        <div>
+           <h3>qPCR/ddPCR:</h3>
+            <h4> Specific platforms?: </h4>
+            <ul>
+               <li> Pros: </li>
+               <li> Cons: </li> 
+                <li> General resources: </li> 
+                <li> Resources for specialists: </li> 
+            </ul> 
+        </div>
+        <div>
+           <h3>  Metagenomics:</h3>
+            <h4> Shotgun sequencing: </h4>
+            <ul>
+               <li> Pros: </li>
+               <li> Cons: </li> 
+                <li> General resources: </li> 
+                <li> Resources for specialists: </li> 
+            </ul> 
+        </div>
+         <div>
+            <h3>Sequence data repositories:</h3>
+            <ul>
+                <li>European Nucleotide Archive (ENA): <a href="https://www.ebi.ac.uk/ena/browser/home ">European Nucleotide Archive (ENA)</a> </li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+    
+     <!-- Data analysis -->
+    <div id="bioinformatics-pipeline" class="info-section">
+        <div>
+            <h2>Bioinformatics Pipeline</h2>
+            <p>Standard data processing flows including quality filtering, denoising (ASVs vs. OTUs), chimera checks, and taxonomy assignment.
+             Bioinformatics pipeline refers to all the steps taken from raw sequences obtained from the sequencing platform, to the dataset used for biodiversity measurements. 
+            Standard algorithms are available for quality control, trimming, and chimera checking. 
+            Decisions must be made as to how sequences are compared to reference databases to assign taxonomy. 
+            </p>
+        </div>
+        <div>
+           <h3>  Metabarcoding:</h3>
+            <h4> Important decision points: </h4>
+            <ul>
+               <li> Pros: </li>
+               <li> Cons: </li> 
+               <li> General resources: </li> 
+                <li> Resources for specialists: </li> 
+            </ul> 
+        </div>
+        <div>
+           <h3>  qPCR/ddPCR:</h3>
+            <h4> Important decision point: </h4>
+            <ul>
+               <li> Pros: </li>
+               <li> Cons: </li> 
+               <li> General resources: </li> 
+                <li> Resources for specialists: </li> 
+            </ul> 
+        </div>
+        <div>
+           <h3>  Metagenomics:</h3>
+            <h4> Important decision point: </h4>
+            <ul>
+               <li> Pros: </li>
+               <li> Cons: </li> 
+               <li> General resources: </li> 
+                <li> Resources for specialists: </li> 
+            </ul> 
+        </div>
+    </div>
+    
+    <div id="qc" class="info-section">
+        <div>
+            <h2>Quality check</h2>
+            <p> Sequencing errors must be identified and removed using specialized algorithms.</p>
+        </div>
+       <div>
+           <h3>  Suggested tools:</h3>
+            <ul>
+               <li>  </li>
+               <li> </li> 
+                <li>  </li>
+            </ul> 
+        </div> 
+    </div>
+    
+    <div id="denoise" class="info-section">
+        <div>
+            <h2>Denoising</h2>
+            <p> Choosing how to resolve sequences impacts the comparability and replicability of studies.</p>
+        </div>
+       <div>
+           <h3>  Metabarcoding:</h3>
+           <h2>ASV vs. OTUs:</h2>
+            <ul>
+               <li> Pros: </li>
+               <li> Cons: </li> 
+               <li> General resources: </li> 
+                <li> Resources for specialists: </li> 
+            </ul> 
+               
+        </div> 
+    </div>
+    
+    <div id="tax-assign" class="info-section">
+        <div>
+            <h2>Taxonomic assignment</h2>
+            <p>Reference databases must be chosen carefully and many taxonomic group specific databases exist.</p>
+        </div>
+       <div>
+           <h3>  Suggested databases:</h3>
+            <ul>
+               <li> Microbial eukaryotes: <a href="https://pr2-database.org/">Protist Ribosomal Reference (PR2)</a> </li>
+               <li> Bacteria: <a href="https://www.arb-silva.de/"> SILVA</a>  </li> 
+                 <li> Other marine species: <a href="https://www.marinespecies.org/"> World Registry of Marine Species (WoRMS)</a> </li>
+            </ul> 
+        </div> 
+    </div>
+     <!-- Biodiversity indicators -->
+    <div id="biodiversity-metrics" class="info-section">
+        <div>
+            <h2>Biodiversity Metrics</h2>
+            <p>Methods for computing Alpha diversity indices, Beta community variations, and multi-metric indices based on sequence data counts.</p>
+        </div>
+    </div>
+
+    <div id="evs" class="info-section">
+        <div>
+            <h2>EVs (Essential Variables)</h2>
+            <p>Mapping eDNA outputs directly to national or global Essential Biodiversity Variables (EBVs) frameworks.</p>
+        </div>
+    </div>
+
+    <div id="wfd" class="info-section">
+        <div>
+            <h2>WFD (Water Framework Directive)</h2>
+            <p>Mapping eDNA outputs directly to national or global Water Framework Directive (WFD).</p>
+        </div>
+    </div>
+
+    <div id="msfd" class="info-section">
+        <div>
+            <h2>MSFD (Marine Strategy Framework Directive)</h2>
+            <p>Mapping eDNA outputs directly to national or global Marine Strategy Framework Directive (MSFD).</p>
+        </div>
+    </div>
+
+     <!-- Final product -->
+    <div id="metric-submit" class="info-section">
+        <div>
+            <h2>Metric to submit to database</h2>
+            <p>Final formats, metadata schemas, and submission keys required for uploading reporting parameters to central biodiversity open access portals.</p>
+        </div>
+    </div>
+
+    <!-- Navigation Script -->
+    <script>
+        function showContent(sectionId) {
+            document.getElementById('instruction-placeholder').style.display = 'none';
+            const sections = document.querySelectorAll('.info-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+            const activeSection = document.getElementById(sectionId);
+            activeSection.classList.add('active');
+            activeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    </script>
+</body>
+</html>
