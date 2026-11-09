@@ -149,15 +149,15 @@
     <div>
         <p> Each section represents a key decision point in the utilization of eDNA for biodiversity monitoring and provides example workflows. 
             Click on the button for information on the choices involved in each step and for resources to guide decision making. 
-            Thorough documentation and metadata is essential for successful eDNA studies that adhere to FAIRe policies and are comparable.</p>
+            Thorough documentation and metadata is essential for successful eDNA studies that adhere to FAIR policies and are comparable.</p>
         <div>
             <ol>
-                <li><b>Starting Point:</b> Example data types or policy questions for implementing eDNA.</li>
+                <li><b>User Case:</b> Example data types or policy questions for implementing eDNA.</li>
                 <li><b>Method Choice:</b>  Information on the selectivity and readiness of environmental DNA methods for policy integration.  </li>
-                <li><b>Sample Processing:</b> Field and lab actions to generate DNA sequences.</li>
-                <li><b>Data Analysis:</b> Key steps in the bioinformatic pipelines used for DNA sequence processing. </li>
-                <li><b>Biodiversity Indicators:</b> The types of biodiversity data that each method can provide. </li>
-                <li><b>Final Product:</b> Final formats, metadata schemas, and submission keys required for uploading reporting parameters to central biodiversity open access portals. </li>
+                <li><b>Sample Processing:</b> Field and lab actions to generate DNA sequences. End product: Metadata and raw sequence tables.</li>
+                <li><b>Sequencing Processing:</b> Key steps in the bioinformatic pipelines used for DNA sequence processing. End product: Taxonomy tables and metadata files.</li>
+                <li><b>Data Analysis:</b> The types of biodiversity data that each method can provide. End product: Biodiversity metrics and/or taxa abundance for generating essential variables and metadata files.</li>
+                <li><b>Policy Indicators:</b> European Union policy frameworks suited for integration with eDNA datasets. Final formats, metadata schemas, and submission keys required for uploading reporting parameters to central biodiversity open access portals. </li>
             </ol>
         </div>
       </div>
@@ -195,7 +195,7 @@
         
         <!-- Suggested Method Column with Custom Arrows -->
         <div class="flow-column">
-            <div class="column-header">1. Starting Point</div>
+            <div class="column-header">1. User Case</div>
             
             <button class="step-btn btn-blue" onclick="showContent('plankton-tax')">Dataset: Plankton taxonomy</button>
              
@@ -209,7 +209,7 @@
             <button class="step-btn btn-cyan" onclick="showContent('metabarcoding')">Metabarcoding</button>
             </div>
 
-        <!-- Lab Processing -->
+        <!-- Sample Processing -->
         <div class="flow-column">
             <div class="column-header">3. Sample Processing</div>
             <button class="step-btn btn-cyan" onclick="showContent('sampling')">Sample collection</button>
@@ -226,14 +226,14 @@
                     <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
                 </svg>
             </div>
-            <button class="step-btn btn-cyan" onclick="showContent('pcr-primers')">PCR primers</button>
+            <button class="step-btn btn-cyan" onclick="showContent('pcr-primers')">PCR </button>
             <!-- Down Arrow from Target Taxa to Method Suggestion -->
             <div class="arrow-box">
                 <svg class="arrow-svg" viewBox="0 0 24 24">
                     <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
                 </svg>
             </div>
-            <button class="step-btn btn-cyan" onclick="showContent('library-prep')">Library preparation</button>
+            <button class="step-btn btn-cyan" onclick="showContent('library-prep')">Preparation for sequencing</button>
             <!-- Down Arrow from Target Taxa to Method Suggestion -->
             <div class="arrow-box">
                 <svg class="arrow-svg" viewBox="0 0 24 24">
@@ -241,12 +241,12 @@
                 </svg>
             </div>
             <button class="step-btn btn-cyan" onclick="showContent('sequencing-platforms')">Sequencing platforms</button>
-        
+            <button class="step-btn btn-diamond" onclick="showContent('submit-seqs')">Submit raw sequences</button>
         </div>
 
-        <!-- Data Analysis -->
+        <!-- Sequence Processing -->
         <div class="flow-column">
-            <div class="column-header">4. Data Analysis</div>
+            <div class="column-header">4. Sequence Processing</div>
             <button class="step-btn btn-cyan" onclick="showContent('qc')">Quality check</button>
             <!-- Down Arrow from Target Taxa to Method Suggestion -->
             <div class="arrow-box">
@@ -262,22 +262,34 @@
                 </svg>
             </div>
             <button class="step-btn btn-cyan" onclick="showContent('tax-assign')">Taxonomy assignment</button>
+            <div class="arrow-box">
+                <svg class="arrow-svg" viewBox="0 0 24 24">
+                    <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
+                </svg>
+            </div>
+            <button class="step-btn btn-diamond" onclick="showContent('submit-taxa')">Submit presence/absence data</button>
             
         </div>
 
-        <!-- Biodiversity Indicator -->
+        <!-- Data Analysis  -->
         <div class="flow-column">
-            <div class="column-header">5. Biodiversity Indicators</div>
+            <div class="column-header">5. Data Analysis</div>
             <button class="step-btn btn-cyan" onclick="showContent('biodiversity-metrics')">Biodiversity metrics</button>
     
             <div style="height: 15px;"></div>
             <button class="step-btn btn-cyan" onclick="showContent('msfd')">MSFD</button>
         </div>
 
-        <!-- Final Product -->
+        <!-- Policy Indicators -->
         <div class="flow-column">
-            <div class="column-header">6. Final Product</div>
-            <button class="step-btn btn-diamond" onclick="showContent('metric-submit')">Metric to submit to database</button>
+            <div class="column-header">6. Policy Indicators</div>
+            <button class="step-btn btn-cyan" onclick="showContent('eovs')">Essential Ocean Variables</button>
+            <div style="height: 15px;"></div>
+            <button class="step-btn btn-cyan" onclick="showContent('wfd')">Water Framework Directive</button>
+            <div style="height: 15px;"></div>
+            <button class="step-btn btn-cyan" onclick="showContent('msfd')">Marine Strategy Framework Directive</button>
+            <div style="height: 15px;"></div>
+            <button class="step-btn btn-diamond" onclick="showContent('data-manage')">Data Management</button>
         </div>
 
     </div>
@@ -288,231 +300,102 @@
     </div>
 
     <!-- Content Sections (Keep exactly the same as previous step) -->
-    <div id="fish-abundance" class="info-section">
-        <div>
-            <h2>Fish abundance dataset</h2>
-            <p>Fish abundance data generated using qPCR or ddPCR analysis. </p>
-        </div>
-    </div>
-
-    <div id="plankton-tax" class="info-section">
+     <div id="plankton-tax" class="info-section">
         <div>
             <h2>Plankton taxonomy dataset</h2>
-            <p>Plankton taxonomic information generated using metabarcoding.</p>
+            <p>A dataset generated using metabarcoding with general eukaryotic primers yielding read abundance and an associated taxonomy table. This data can be used to generate Essential Variables that are applicable to several European policy frameworks. Recommended steps are selected in each column of the workflow. </p>
         </div>
-    </div>
-
-    <div id="invasive-fish" class="info-section">
-        <div>
-            <h2>Invasive fish species dataset</h2>
-            <p>Fish taxonomic information generated using metabarcoding or fish abundance data generated using qPCR or ddPCR.</p>
-        </div>
-    </div>
-
-
-    <div id="method-suggestion" class="info-section">
-        <h2>Method Suggestion</h2>
-        <p>Based on the target taxa, choose between targeted species detection or broad-scale community profiling.
-         Sampling considerations that impact biodiversity assessment include: sampling depth, volume, daily timing.</p>
-    </div>
-
-    <div id="init-hab" class="info-section">
-        <div>
-            <h2>Monitoring harmful algal bloom</h2>
-            <p>MSFD descriptor 5: D5C3, D5C4, D5C6- Monitoring the impact of eutrophication on harmful algal species abundance</p>
-        </div>
-        <div>
-            <h3>Recommended methods:</h3>
+         <div>
+            <h3>Policy applications:</h3>
             <ul>
-                <li>Metabarcoding</li>
-                <li>qPCR/ddPCR</li>
+                <li>EBV framework:</li>
+                    <ul>
+                        <li>Eco_EF_phe_ppla_FW</li>
+                        <li>Eco_EF_phe_habi_MA</li>
+                        <li>Eco_EF_phe_ppla_MA</li>
+                        <li>Eco_CC_com_micro_MA</li>
+                        <li>Eco_CC_com_micro_FW</li>
+                    </ul>
+                <li> EOV framework:</li>
+                    <ul>
+                        <li>Variable: Phytoplankton biomass and diversity</li>
+                        <li>Variable: Microbe biomass and diversity</li>
+
+                    </ul>
+                <li>MSFD framework:</li>
+                    <ul>
+                        <li>MSFD descriptor 5: D5C3, D5C4, D5C6- Monitoring the impact of eutrophication on harmful algal species abundance</li>
+                    </ul>
             </ul>
         </div>
-    </div>
-
-    <div id="init-nonindig" class="info-section">
-        <div>
-            <h2>Detecting non-indiginous species</h2>
-            <p>MSFD descriptor 2: D2C1, D2C2, D2C3- Measuring levels of non-indigenous fish species. </p>
-        </div>
-        <div>
-            <h3>Recommended methods:</h3>
+         <div>
+            <h3>Examples of application:</h3>
             <ul>
-                <li>Metabarcoding</li>
-                <li>qPCR/ddPCR</li>
+                <li>MARCO-BOLO D2.4, Junger et al. 2026 preprint</li>
+                <li><a href="https://doi.org/10.1038/s41598-023-42389-3 "> Specchia et al. 2023 </a> </li>
+
             </ul>
         </div>
+  
     </div>
 
-    <div id="init-fishabund" class="info-section">
-        <div>
-            <h2>Estimating fish and shellfish abundance</h2>
-            <p>MSFD descriptor 2: D2C1, D2C2, D2C3- Measuring levels of non-indigenous fish species.
-                MSFD descriptor 3: D3C1, D3C2, D3C3- Fisheries management to prevent overfishing.
-            </p>
-        </div>
-        <div>
-            <h3>Recommended methods:</h3>
-            <ul>
-                <li>Metabarcoding</li>
-                <li>qPCR/ddPCR</li>
-            </ul>
-        </div>
-    </div>
     
     <!-- Methodology -->
-    <div id="metabarcoding" class="info-section">
+     <div id="metabarcoding" class="info-section">
         <div>
             <h2>Metabarcoding</h2>
-            <p>Utilized for broad biodiversity assessments across multiple trophic levels simultaneously using high-throughput sequencing panels. 
-                Metabarcoding yields taxonomic composition of the community but does not provide absolute species abundance. 
-                It involves extracting the DNA from the environment and amplifying DNA regions targeting specific taxonomic groups using PCR.</p>
+            <p>Utilized for broad biodiversity assessments across multiple trophic levels simultaneously using high-throughput sequencing platforms. Metabarcoding yields taxonomic composition of the community but does not provide absolute species abundance. It involves extracting the DNA from the environment and amplifying DNA regions targeting specific taxonomic groups using polymerase chain reaction (PCR) which creates copies of DNA sequence of the targeted region. </p>
         </div>
         <div>
             <h3>Pros:</h3>
             <ul>
-                <li>Non-invasive </li>
-                <li> Relatively inexpensive</li>
+                <li>Non-invasive and relatively inexpensive compared to traditional methods</li>
+                <li> Provides detailed taxonomic information about certain groups</li>
             </ul>
        </div>
         <div>
             <h3>Cons:</h3>
             <ul>
-                <li>Low taxonomic specificity of primers </li>
-                <li> Incomplete reference database</li>
-                <li>DNA degradation and dispersal </li>
-                <li> Abundance estimation of pluricellular organisms</li>
-                <li>Lack of Standardization </li>
-                <li> Cannot be used for abundance</li>
-                
+                <li>Incomplete reference database can limit the ability to identify organisms present</li>
+                <li>Generally does not provide absolute abundance data</li>
+                    <ul>
+                        <li>But in certain circumstances absolute abundances can be derived when seawater sampling volumes and DNA yields are available (see preprint: <a href="https://www.biorxiv.org/content/10.1101/2025.10.25.684415v1"> Crédeville et al.</a> </li>
+                    </ul>
             </ul>
        </div>
         <div>
             <h3>General resources:</h3>
             <ul>
-               <li> Link 1 </li>
-               <li> Link 2</li> 
+               <li> Technology readiness level of biodiversity monitoring with molecular methods: <a href="https://doi.org/10.3897/mbmg.9.130834"> Laamanen et al.2025 </a> </li>
+               <li> Review of biodiversity monitoring with eDNA: <a href="https://doi.org/10.1111/mec.15472"> Cordier et al 2020 </a> </li> 
             </ul>
        </div>
         <div>
             <h3>Resources for specialists:</h3>
             <ul>
-               <li> Link 1 </li>
-               <li> Link 2</li> 
+               <li> Best practices through whole process: <a href="https://doi.org/10.3897/mbmg.10.174450"> Watts et al. 2026  </a>  </li>
+            </ul>
+       </div>
+       <div>
+            <h3>Examples:</h3>
+            <ul>
+               <li> Plankton: <a href="https://doi.org/10.1038/s41598-023-42389-3 "> Specchia et al. 2023 </a>  </li>
+               <li> Crustaceans: <a href="https://doi.org/10.1002/ece3.74462 "> De Donno et al. 2026 </a>  </li>
+               <li> Metazoans: <a href="https://doi.org/10.1093/icesjms/fsab059 "> Capua et al. 2021  </a>  </li>
+               <li> Fish: <a href="https://doi.org/10.1002/edn3.70077"> Polanco et al. 2025  </a>  </li>
+               <li> Gastropod and bivalves: <a href="https://doi.org/10.3390/d17120863 "> Chi Mai et al. 2025  </a>  </li>
+               <li> Coral reefs: <a href="https://doi.org/10.1073/pnas.2307214121"> Muenzel at al. 2024 </a>  </li>
+               <li> Marine mammals: <a href="https://doi.org/10.1016/j.marenvres.2026.107985"> Alvarez-Gonzalez et al. 2026  </a> , <a href="https://doi.org/10.3791/70334"> Ovide et al. 2026  </a> ,<a href="https://doi.org/10.1371/journal.pone.0041781">  Foote et al. 2012  </a> </li>
+               <li> Marine vertebrates: <a href="https://doi.org/10.1111/1755-0998.14079"> Doorenspleet et al. 2025 </a>  </li>
             </ul>
        </div>
     </div>
 
-    <div id="ddpcr-qpcr" class="info-section">
-        <div>
-            <h2>ddPCR / qPCR</h2>
-            <p>Best for targeted species monitoring (e.g., invasive pests or highly endangered target species) where quantitative sensitivity is paramount.
-            Quantitative PCR (qPCR) and digital droplet PCR (ddPCR) yields information on the presence and abundance of specific targeted taxa or species. 
-            It involves extracting DNA from the environment and amplifying DNA regions specific to highly specified taxonomic groups using qPCR and ddPCR machines.</p>
-        </div>
-         <div>
-            <h3>Pros:</h3>
-            <ul>
-                <li> Non-invasive </li>
-                <li> Generates abundances of organisms</li>
-            </ul>
-       </div>
-        <div>
-            <h3>Cons:</h3>
-            <ul>
-                <li> Limited species specific primers </li>
-                <li> Incomplete reference database</li>          
-            </ul>
-       </div>
-        <div>
-            <h3>General resources:</h3>
-            <ul>
-               <li> Link 1</li>
-               <li> Link 2</li> 
-            </ul>
-       </div>
-        <div>
-            <h3>Resources for specialists:</h3>
-            <ul>
-               <li> Link 1 </li>
-               <li> Link 2</li> 
-            </ul>
-       </div>
-    </div>
-    <div id="metagenomics" class="info-section">
-        <div>
-            <h2>Metagenomics</h2>
-            <p>Shotgun sequencing applications used to capture whole environmental genomes without targeted PCR bias.
-             Metagenomics yields taxonomic identification and potential function of organisms present. 
-            It involves extracting DNA from the environment and sequencing the DNA without targeting with specific primers or amplifying targeted regions using PCR.</p>
-        </div>
-        <div>
-            <h3>Pros:</h3>
-            <ul>
-                <li> Non-invasive </li>
-                <li> PCR independent approach </li>
-            </ul>
-       </div>
-        <div>
-            <h3>Cons:</h3>
-            <ul>
-                <li> Computational complex </li>              
-            </ul>
-       </div>
-        <div>
-            <h3>General resources:</h3>
-            <ul>
-               <li> Link 1</li>
-               <li> Link 2</li> 
-            </ul>
-       </div>
-        <div>
-            <h3>Resources for specialists:</h3>
-            <ul>
-               <li> Link 1 </li>
-               <li> Link 2</li> 
-            </ul>
-       </div>
-    </div>
-
-     <div id="metatranscriptomics" class="info-section">
-        <div>
-            <h2>Metatranscriptomics</h2>
-            <p>Shotgun sequencing applications used to capture whole environmental transcripts without targeted PCR bias.
-            Metatranscriptomics involves extracting RNA from the environment and sequencing the DNA without targeting with specific primers or amplifying targeted regions using PCR.</p>
-        </div>
-         <div>
-            <h3>Pros:</h3>
-            <ul>
-                <li> Non-invasive </li>
-                <li> PCR independent approach </li>
-            </ul>
-       </div>
-        <div>
-            <h3>Cons:</h3>
-            <ul>
-                <li> Computational complex </li>              
-            </ul>
-       </div>
-         <div>
-            <h3>General resources:</h3>
-            <ul>
-               <li> Link 1</li>
-               <li> Link 2</li> 
-            </ul>
-       </div>
-        <div>
-            <h3>Resources for specialists:</h3>
-            <ul>
-               <li> Link 1 </li>
-               <li> Link 2</li> 
-            </ul>
-       </div>
-     </div>
     
      <!-- Sample Processing -->
-     <div id="sampling" class="info-section">
+      <div id="sampling" class="info-section">
         <h2>Sample collection</h2>
+        <p>Sampling plans will vary depending on the target organisms and policy initiatives. Consistency in all steps of sample collection is necessary for reproducibility across studies. Quality metadata ensures that sampling efforts are properly documented and are necessary for submission into data archives. </p>
          <div>
             <h3>Importance elements to consider are: </h3>
             <ul>
@@ -534,225 +417,368 @@
             </ul>
        </div>
          <div>
-            <h3>General resources:</h3>
+            <h3>Resources on sampling plans:</h3>
             <ul>
-               <li> Link 1</li>
-               <li> Link 2</li> 
+               <li> EMOBON handbook: <a href=" https://www.embrc.eu/documents/2024.04_EMOBON-Handbook_FINAL.pdf "> EMOBON Handbook</a> </li>
+               <li> eDNA society guide: <a href=" https://doi.org/10.1002/edn3.121 "> Minamoto et al. 2020</a> </li>
+               <li> Southern eDNA society best practice guide:  <a href=" https://www.sednasociety.com/_files/ugd/3a3fd4_cc83727bf78244ccb618e23ff9671e91.pdf "> Southern eDNA Society</a>  </li>
             </ul>
        </div>
         <div>
-            <h3>Resources for specialists:</h3>
+            <h3>Resources on metadata:</h3>
             <ul>
-               <li> Link 1 </li>
-               <li> Link 2</li> 
+               <li> Findable Accessible Interoperable Reusable eDNA: <a href=" https://fair-edna.github.io/guidelines.html"> FAIRe</a> </li>
+               <li> Better Biomolecular Ocean Practices: <a href=" https://github.com/BeBOP-OBON"> BeBOP</a>  </li> 
+                <li> Metadata checklist and data formatting guide: <a href="https://doi.org/10.1002/edn3.70100"> Takashi et al. 2025</a></li>  
             </ul>
        </div>
     </div>
     
    <div id="dna-extraction" class="info-section">
        <div> <h2>DNA Extraction</h2>
-        <p>DNA can be extracted using commercial kits or from personal lab protocols. 
-            Some testing may be required to optimize for your organisms of choice, as different cell types may be more difficult to break apart for extraction. </p>
+        <p>DNA can be extracted using commercial kits or from personal lab protocols. Some testing may be required to optimize for organisms of choice, as different cell types may be more difficult to break apart for extraction. Following extraction, magnetic bead cleanups can ensure the quality of DNA is adequate. The whole process must be conducted in a lab space that is free from contamination, ideally in a PCR-hood to isolate quality yields. 
+        There are extraction kits that are specific for water analysis, but if benthic species are targeted or if particle attached organisms are of interest, DNA extraction kits designed for soil may be better suited. These kits typically account for possible PCR inhibitors present in higher abundance in particles or soil. 
+        </p>
        </div>
         <div>
-            <h3>General resources:</h3>
+            <h3>Resources:</h3>
             <ul>
-               <li> Link 1</li>
-               <li> Link 2</li> 
-            </ul>
-       </div>
-        <div>
-            <h3>Resources for specialists:</h3>
-            <ul>
-               <li> Link 1 </li>
-               <li> Link 2</li> 
+               <li> EMOBON handbook: <a href=" https://www.embrc.eu/documents/2024.04_EMOBON-Handbook_FINAL.pdf "> EMOBON Handbook</a> </li>
+               <li> eDNA society guide: <a href=" https://doi.org/10.1002/edn3.121 "> Minamoto et al. 2020</a> </li>
+               <li> Southern eDNA society best practice guide:  <a href=" https://www.sednasociety.com/_files/ugd/3a3fd4_cc83727bf78244ccb618e23ff9671e91.pdf "> Southern eDNA Society</a>  </li>
             </ul>
        </div>
    </div>
     
     <div id="pcr-primers" class="info-section">
         <div>
-            <h2>PCR Primers</h2>
-            <p> Metabarcoding primers target entire groups: Fish (COI, 16S, 12S), plankton (18S- microbial eukaryotes; 16S- prokaryotes), fungi, virus, mammal, birds. </p>
+            <h2>PCR </h2>
+            <p> PCR primers determine which sequences of DNA will be replicated during the PCR runs, and impact the sequencing platform used. Primers for metabarcoding  target general groups of organisms while qPCR/dPCR use target primers for specific taxa groups or species. Primers for qPCR must be carefully selected and tested to ensure proper amplification. Blank sample controls and positive DNA controls are important to include in PCR runs.
+            </p>
         </div>
         <div>
-            <h3>Metabarcoding targets:</h3>
+            <h3>Common metabarcoding targets:</h3>
             <ul>
-               <li> Bacteria- 16S </li>
-               <li> Eukaryotes- 18S and/or 28S</li> 
-                <li> Metazoan- COI </li>
-               <li> Fish- 12S </li> 
-                <li> Fungi- ITS </li>
-               <li> Viral- ? </li> 
+               <li> 16S- Bacteria</li> 
+                <li> 18S- Eukaryote</li>
+               <li> 28S- Eukaryote</li> 
             </ul>
        </div>
         <div>
             <h3>General resources:</h3>
             <ul>
-               <li> Link 1</li>
-               <li> Link 2</li> 
+               <li> MARCO-BOLO WP2.2 Table 1 comparison of primers <a href=" https://github.com/MadsRJ/MBO_WP2_Tables/"> WP2.2 Table 1</a> </li>
             </ul>
        </div>
         <div>
             <h3>Resources for specialists:</h3>
             <ul>
-               <li> Link 1 </li>
-               <li> Link 2</li> 
+               <li> PR2 primer database for protists: <a href=" https://doi.org/10.1111/1755-0998.13465 "> Vaulot et al. 2021 </a> </li>
+               <li> qPCR primer database: <a href=" https://qprimerdb.biodb.org/"> Li et al. 2025</a> </li>
             </ul>
        </div>
     </div>
 
     <div id="library-prep" class="info-section">
         <div>
-            <h2>Library Preparation</h2>
-            <p>SOPs for index ligation, cleanups, absolute quantification, and pooling controls to prevent cross-contamination.</p>
+            <h2>Preparation for Sequencing</h2>
+            <p>After PCR, DNA products must be cleaned and quantified. With metabarcoding, multiple samples are typically pooled together for sequencing, which requires an index to be added before pooling so later the sequences from each sample can be identified. The index used depends on the sequencing platform. After samples are indexed, the product must be cleaned before they are pooled together for sequencing. Extracted DNA must be properly cleaned, quantified and pooled with controls to prevent cross-contamination. </p>
+        </div>
+         <div>
+            <h3>Resources:</h3>
+            <ul>
+               <li> EMOBON handbook: <a href=" https://www.embrc.eu/documents/2024.04_EMOBON-Handbook_FINAL.pdf "> EMOBON Handbook</a> </li>
+               <li> eDNA society guide: <a href=" https://doi.org/10.1002/edn3.121 "> Minamoto et al. 2020</a> </li>
+               <li> Southern eDNA society best practice guide:  <a href=" https://www.sednasociety.com/_files/ugd/3a3fd4_cc83727bf78244ccb618e23ff9671e91.pdf "> Southern eDNA Society</a>  </li>
+            </ul>
+       </div>
+        <div>
+            <h3>Resources for specialists:</h3>
+                <ul>
+                    <li> Comparison of indexes: <a href=" https://doi.org/10.1111/1755-0998.13512  "> Bohmann et al. 2021</a> </li> 
+                </ul>
         </div>
     </div>
     
     <div id="sequencing-platforms" class="info-section">
         <div>
             <h2>Sequencing Platforms</h2>
-            <p>Operational instructions for benchmarking.
-            Must ensure that sequences are placed in the proper archive.</p>
+            <p>The number of sequences (sequencing depth) and type of sequences generated during sequencing runs are an important component of capturing community diversity. For metabarcoding, short reads using Illumina are standard but long reads using Oxford Nanopore or PacBio are becoming more common. Different sequencing platforms require different primer sets. Often pools of samples are shipped to core facilities for sequencing.</p>
         </div>
         <div>
-           <h3>Metabarcoding:</h3>
-            <h4> Short-reads with Illumina sequencing: </h4>
+           <h3>Metabarcoding</h3>
+            <h4> Short reads: Illumina </h4>
             <ul>
                <li> Pros: Quick, less expensive, extensive support for sample analysis</li>
                <li> Cons: Miss certain groups with large repeats</li> 
-                <li> Resources: </li> 
             </ul> 
-            <h4> Long-reads with Oxford Nanopore sequencing: </h4>
+            <h4> Long reads: Nanopore/PacBio </h4>
             <ul>
                <li> Pros: Better taxonomic resolution </li>
                <li> Cons: Less resources for sample analysis since emerging technology</li>
-                <li> General resources: </li> 
-                <li> Resources for specialists: </li> 
             </ul> 
+            <h4>Examples: </h4>
+                <ul>
+                    <li> Protists: <a href=" https://doi.org/10.7717/peerj.19158  ">  Chwalińska et al. 2025</a> </li> 
+                </ul>
         </div>
     </div>
     
-     <!-- Data analysis -->
-    <div id="bioinformatics-pipeline" class="info-section">
+    <div id="submit-seqs" class="info-section">
         <div>
-            <h2>Bioinformatics Pipeline</h2>
-            <p>Standard data processing flows including quality filtering, denoising (ASVs vs. OTUs), chimera checks, and taxonomy assignment.
-             Bioinformatics pipeline refers to all the steps taken from raw sequences obtained from the sequencing platform, to the dataset used for biodiversity measurements. 
-            Standard algorithms are available for quality control, trimming, and chimera checking. 
-            Decisions must be made as to how sequences are compared to reference databases to assign taxonomy. 
-            </p>
+            <h2>Submit raw sequences</h2>
+            <p>After the sequences are run, pooled samples must be identified by their sequence index and sorted to separate the sequences from different samples, this process is called demultiplexing. Sometimes it is completed by the sequencing facility before the data is returned. The DNA sequences that are separated by sample must be placed into sequence archives with proper metadata to ensure that data generated is FAIR. Archive websites have detailed instructions and help desks to assist with difficulties.</p>
         </div>
+        <div>
+           <h3>Metabarcoding:</h3>
+           <ul>
+                <li> European Nucleotide Archive (ENA): <a href="https://www.ebi.ac.uk/ena/browser/home "> ENA</a> </li> 
+               <li> National Center for Biotechnology Information (NCBI)/GenBank:  <a href="https://www.ncbi.nlm.nih.gov/nucleotide/"> NCBI</a> </li> 
+               <li> Ocean DNA Explorer:<a href="  https://www.oceandnaexplorer.org/  "> Ocean DNA Explorer</a> </li> 
+               <li>International Sequence Database Collaboration: <a href="https://www.insdc.org/ "> ISDC</a> </li> 
+           </ul>
+           <h3>Sequence metadata:</h3>
+           <ul>
+            <li> eDNAqua-Plan metadata guide : <a href=" https://zenodo.org/records/18833237 "> Babo et al. 2026</a> </li> 
+            </ul>
+       </div>
+   </div>
     
-         <div>
-           <h3>  Metabarcoding:</h3>
-            <h4> Important decision points: </h4>
-            <ul>
-               <li> Pros: </li>
-               <li> Cons: </li> 
-               <li> General resources: </li> 
-                <li> Resources for specialists: </li> 
-            </ul> 
-        </div>
-    </div>
     
+    <!-- Sequence Processing -->  
     <div id="qc" class="info-section">
         <div>
             <h2>Quality check</h2>
-            <p> Sequencing errors must be identified and removed using specialized algorithms.</p>
+            <p> Sequence errors are a natural result of PCR. General quality of sequences and confidence in base pair identities must be checked to increase data quality. Tools can be used to filter sequences at quality thresholds. Further identification and removing sequencing errors can be accomplished using specialized algorithms. </p>
         </div>
        <div>
            <h3>  Suggested tools:</h3>
             <ul>
-               <li>  </li>
-               <li> </li> 
-               <li>  </li>
+               <li>  <a href=" https://github.com/torognes/vsearch  "> Vsearch </a> </li>
+               <li>  <a href=" https://www.drive5.com/usearch/index.html  "> USEARCH</a> </li>
+               <li>  <a href=" https://benjjneb.github.io/dada2/ "> DADA2</a> </li>
+               <li>  <a href=" https://obitools4.metabarcoding.org/obitools/obiclean/ "> OBITools </a> </li>
+               <li>  <a href=" https://decipher.codes/index.html "> DECIPHER </a> </li>
+            </ul> 
+        </div> 
+        <div>
+           <h3> General resources:</h3>
+            <ul>
+               <li> MARCO-BOLO WP2.2 Table 2 <a href=" https://github.com/torognes/vsearch  "> Table 2 </a> </li>
+               <li>  <a href=" https://www.iogp-edna.org/wp-content/uploads/2025/01/Chapter-4-Industry-Guidance-on-Bioinformatics-Analysis-Standards-and-Guidelines-for-eDNA-Data-relevant-to-OG.pdf  "> IOGP Decision Tree </a> </li>
+            </ul>
+        </div>
+        <div>
+           <h3> Resources for specialists:</h3>
+            <ul>
+               <li>  <a href=" https://github.com/iobis/PacMAN-pipeline  "> PacMAN </a> </li>
+               <li>  <a href="  https://github.com/McAllister-NOAA/REVAMP "> REVAMP</a> </li>
             </ul> 
         </div> 
     </div>
     
     <div id="denoise" class="info-section">
         <div>
-            <h2>Denoising</h2>
-            <p> Choosing how to resolve sequences impacts the comparability and replicability of studies.</p>
+            <h2>Denoising </h2>
+            <p> PCR creates many copies of the DNA sequences present, which means that many sequences could belong to the same organism. Grouping similar or identical sequences together is the next step in the data processing. Choosing how to resolve similar sequences impacts the comparability and replicability of studies. Operational Taxonomic Units (OTUs) and Amplicon Sequence Variants (ASVs) are the most common ways to cluster sequences. </p>
         </div>
        <div>
-            <h3>  Metabarcoding:</h3>
-           <h2>ASV vs. OTUs:</h2>
+           <h3>  Metabarcoding:</h3>
+           <h4>Operational Taxonomic Units (OTUs):</h4>
             <ul>
-               <li> Pros: </li>
-               <li> Cons: </li> 
-               <li> General resources: </li> 
-                <li> Resources for specialists: </li> 
-            </ul>     
+               <li> Pros: Grouping organisms by different taxa levels  </li>
+               <li> Cons: Because sequences are grouped by relative similarity to each other, it can be difficult to compare the same dataset across studies</li> 
+               <li> Tools: <a href=" https://github.com/torognes/swarm "> Swarm</a> </li> 
+            </ul> 
+             <h4>Amplicon Sequence Variants (ASVs):</h4>
+            <ul>
+               <li> Pros: ASVs are resolved by single nucleotide differences, so they are comparable across studies </li>
+               <li> Cons:  Potentially could capture within species variation</li> 
+               <li> Tools: <a href=" https://benjjneb.github.io/dada2/ "> DADA2</a> </li>    
         </div> 
+        <div> 
+            <h3>General Resources:</h3>
+            <ul>
+                <li> MARCO-BOLO WP2.2 Table 2 <a href="https://doi.org/10.1111/1462-2920.14764  "> Table 2 </a> </li>
+            </ul>
+        </div>
+        <div> 
+            <h3>Resources for specialists</h3>
+            <ul>
+                <li> <a href=" https://github.com/torognes/vsearch  "> Forster et al. 2019 </a> </li>
+            </ul>
+        </div>
     </div>
     
     <div id="tax-assign" class="info-section">
         <div>
             <h2>Taxonomic assignment</h2>
-            <p>Reference databases are collections of identified gene sequences that eDNA sequences are compared to for identifying the sequence. Reference databases must be chosen carefully as an organism must be represented in a database in order to be identified in a sample. Many taxonomic group specific databases exist that are curated by experts in their fields. Regional reference indices may be used for sequence assignment validation.</p>
+            <p>Reference databases are collections of identified gene sequences. Generated eDNA sequences are compared to a reference database for identifying the taxonomy of the sequence. Reference databases must be chosen carefully as an organism must be represented in a database in order to be identified in a sample. Many taxonomic group specific databases exist that are curated by experts in their fields. Regional reference indices may be used for sequence assignment validation.</p>
         </div>
        <div>
-           <h3>  Suggested databases:</h3>
+           <h3> Recommended reference databases:</h3>
             <ul>
                <li> Microbial eukaryotes: <a href="https://pr2-database.org/">Protist Ribosomal Reference (PR2)</a> </li>
                <li> Bacteria: <a href="https://www.arb-silva.de/"> SILVA</a>  </li> 
-                <li> Other marine species: <a href="https://www.marinespecies.org/"> World Registry of Marine Species (WoRMS)</a> </li>
-                <li> General: <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi"> National Center for Biotechnology Information (NCBI)</a>  </li> 
-                 <li> General: <a href="https://www.marinespecies.org/"> Barcode of life data systems (BOLD)</a> </li>
+                 <li> Microzooplankton COI: <a href="https://doi.org/10.1007/s00227-021-03887-y ">Bucklin et al. 2021 </a> </li>
+                 <li> National Center for Biotechnology Information (NCBI): <a href=" https://blast.ncbi.nlm.nih.gov/Blast.cgi "> NCBI</a> </li>
+                 <li> Barcode of life data systems (BOLD):<a href="https://www.boldsystems.org/ "> BOLD)</a> </li>
+                 <li> Multimaker MetaZooGene: <a href="https://doi.org/10.1007/978-1-0716-3581-0_28"> O'Brien et al. 2024</a> </li>
             </ul> 
         </div> 
         <div>
             <h3>General resources:</h3>
             <ul>
-               <li>List of other databases : <a href="https://github.com/MadsRJ/MBO_WP2_Tables/ ">MARCO-BOLO WP2.2 Table 2</a> </li>
+               <li> MARCO-BOLO WP2.2 Table 2 <a href="https://doi.org/10.1111/1462-2920.14764  "> Table 2 </a> </li>
             </ul>
        </div>
         <div>
-            <h3>Resources for specialists:</h3>
+            <h3>Examples:</h3>
             <ul>
-                <li> Example of regionally curated reference database: <a href="https://github.com/MadsRJ/NordicRefDBs/">NordicRefDBs </a> </li>
-            </ul>
+               <li> Regionally curated reference database: <a href="https://github.com/MadsRJ/NordicRefDBs/ "> NordicRefDBs</a>  </li>
+                <li> North Sea COI benthic species: <a href="https://doi.org/10.1038/s41597-025-05500-z"> Christodoulou et al. 2025  </a>  </li>
+           </ul>
        </div>
+        
     </div>
-     <!-- Biodiversity indicators -->
+
+    <div id="submit-taxa" class="info-section">
+        <div>
+            <h2>Submit presence/absence data</h2>
+            <p>After taxonomy has been assigned to DNA sequences, the presence and/or absence of species in different samples can be generated and uploaded to data repositories, along with corresponding metadata.</p>
+        </div>
+       <div>
+           <h3>  Resources:</h3>
+            <ul>
+               <li> Ocean Biodiversity Information System: <a href=" https://obis.org/">OBIS</a> </li>
+               <li> European Nucleotide Archive (ENA): <a href="https://www.ebi.ac.uk/ena/browser/home"> ENA</a>  </li> 
+            </ul> 
+        </div> 
+    </div>
+
+     <!-- Data analysis -->
     <div id="biodiversity-metrics" class="info-section">
         <div>
             <h2>Biodiversity Metrics</h2>
-            <p>Methods for computing Alpha diversity indices, Beta community variations, and multi-metric indices based on sequence data counts.</p>
+            <p>Biodiversity can be assessed at different scales. Alpha diversity indices quantify species diversity and species evenness in one given area. Beta community variation compares community diversity between two areas. Multi-metric indices incorporate taxonomic species diversity and evenness and other metrics to one value for comparison.</p>
+        </div>
+        <div>
+           <h3> Alpha diversity indices:</h3>
+            <ul>
+               <li> Species Richness</li>
+               <li> Shannon's Index </li> 
+               <li> Simpson's and Inverse Simpson's Index </li> 
+            </ul> 
+            <h3> Beta community variation:</h3>
+            <ul>
+               <li> Bray-Curtis dissimilarity</li>
+               <li> Jaccard distance</li> 
+            </ul> 
+            <h3> Multi-metric indices:</h3>
+            <ul>
+               <li> Hill diversity</li>
+            </ul> 
+            <h3> Functional richness/diversity:</h3>
+            <ul>
+               <li> </li>
+            </ul> 
+        </div> 
+        <div>
+           <h3>  Resources:</h3>
+            <ul>
+               <li> <a href=" https://obis.org/"></a> </li>
+            </ul> 
+        </div> 
+    </div>
+
+
+  <!-- Policy Initiatives -->
+    <div id="eovs" class="info-section">
+        <div>
+            <h2>EOVs (Essential Ocean Variables)</h2>
+            <p>Essential Ocean Variables (EOVs) are defined by the Global Ocean Observing System (GOOS) to have priority measurements among national and regional monitoring systems. EOVs are the observations that can be integrated into monitoring programs to observe long-term change in ecosystems. Some of the Biology and Ecosystem (BioEco) EOVs are well suited for the application of eDNA.</p>
+        </div>
+        <div>
+           <h3> Resources:</h3>
+            <ul>
+               <li> EV Overview <a href="  https://bioecoocean.org/webinars-podcasts/marine-biodiversity-networking-friday-with-goos-biology-and-ecosystems-essential-ocean-variables/ ">Kissling et al. 2026</a> </li>
+               <li> MARCO-BOLO WP2 D2.1 Appendix IV (EBV) and Appendix V (EOV) suitability tables. D2.4 Appendix II (examples of eDNA based EOVs from MBO D2.4 case studies) <a href="  https://github.com/pcjunger/MBO-eDNA-EOVs-EBVs"> MB D2.4</a> </li>
+            </ul> 
+            <h3> Potential integration:</h3>
+             <ul>
+               <li> Variable: Phytoplankton biomass and diversity</li>
+            </ul> 
+            <h3> Examples:</h3>
+             <ul>
+                <li>  <a href="  https://doi.org/10.1038/s44358-026-00140-6">Kissling et al. 2026</a> </li>
+               <li> Junger et al. preprint </li> 
+            </ul> 
         </div>
     </div>
 
-    <div id="evs" class="info-section">
+    <div id="wfd" class="info-section">
         <div>
-            <h2>EVs (Essential Variables)</h2>
-            <p>Mapping eDNA outputs directly to national or global Essential Biodiversity Variables (EBVs) frameworks.</p>
+            <h2>WFD (Water Framework Directive)</h2>
+            <p>The Water Framework Directive (WFD) is a policy initiative by the European Commission to protect and restore water health. It describes monitoring requirements and criteria for assessing the health of water bodies. It requires assessing ecological status of water bodies through Biological Quality Elements (BQEs) to categorize ecosystems health into classes from bad to high.</p>
+        </div>
+        <div>
+            <h3> Potential integration:</h3>
+             <ul>
+               <li> Phytoplankton taxonomy and abundance</li>
+            </ul> 
+            <h3> Resources :</h3>
+             <ul>
+                <li> Overview of WFD <a href="https://environment.ec.europa.eu/topics/water/water-framework-directive_en ">WFD</a> </li>
+                <li> eDNAquaPlan recommendations: <a href="https://zenodo.org/records/19051429 ">Deliverable 13</a> </li>
+               <li> Junger et al. preprint </li> 
+            </ul> 
         </div>
     </div>
 
     <div id="msfd" class="info-section">
         <div>
-            <h2>MSFD Policy link</h2>
-             <h3>Detecting non-indiginous species</h3>
-            <p>MSFD descriptor 2: D2C1, D2C2, D2C3- Measuring levels of non-indigenous fish species. </p>
-
+            <h2>MSFD (Marine Strategy Framework Directive)</h2>
+            <p>The Marine Strategy Framework Directive is focused specifically on achieving and protecting the health of marine waters. MSFD defines descriptors used to qualitatively describe healthy marine systems.</p>
         </div>
         <div>
-        <h3>Estimating fish and shellfish abundance</h3>
-            <p>MSFD descriptor 2: D2C1, D2C2, D2C3- Measuring levels of non-indigenous fish species.
-                MSFD descriptor 3: D3C1, D3C2, D3C3- Fisheries management to prevent overfishing.
-            </p>
+            <h3> Potential integration:</h3>
+             <ul>
+               <li> Plankton taxonomy</li>
+                <ul>
+                    <li>Descriptor 5: D5C3, D5C4, D5C6- Monitoring the impact of eutrophication on harmful algal species abundance</li>
+                </ul>
+            </ul> 
+            <h3> Resources :</h3>
+             <ul>
+                <li> Overview of MSFD: <a href="https://environment.ec.europa.eu/topics/marine-environment_en  ">MSFD</a> </li>
+                <li> eDNAquaPlan recommendations: <a href="https://zenodo.org/records/19051429 ">Deliverable 13</a> </li>
+               <li> Junger et al. preprint </li> 
+            </ul> 
         </div>
     </div>
 
-   
-     <!-- Final product -->
-    <div id="metric-submit" class="info-section">
+    <div id="data-manage" class="info-section">
         <div>
-            <h2>Metric to submit to database</h2>
+            <h2>Data Management</h2>
             <p>Final formats, metadata schemas, and submission keys required for uploading reporting parameters to central biodiversity open access portals.</p>
         </div>
+         <div>
+            <h3> Where to place data:</h3>
+             <ul>
+               <li> </li>
+                <ul>
+                    <li></li>
+                </ul>
+               <li> </li> 
+               <ul>
+                   <li></li>
+               </ul>
+               <li> </li> 
+               <ul>
+                   <li></li>
+               </ul>
+            </ul> 
+         </div>
     </div>
 
     <!-- Navigation Script -->
